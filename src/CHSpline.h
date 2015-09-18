@@ -5,13 +5,8 @@
 #include <deque>
 #include <cmath>
 
-
-
-
-class Spline
-{
- public:
-
+class Spline {
+public:
   /**
      \brief Constructor for Cubic Hermite splines implementation with first derivative end conditions
   */
@@ -25,12 +20,12 @@ class Spline
   /**
      \brief Initalise spline coefficients for two knot
   */
-  bool initSpline(double t0,double t1,double p0,double p1,double v0,double v1);
-  
+  bool initSpline(double t0, double t1, double p0, double p1, double v0, double v1);
+
   /**
-     \brief Initalise spline coefficients 
+     \brief Initalise spline coefficients
   */
-  bool initSpline(std::vector<double> ti,std::vector<double> pi,std::vector<double> vi);
+  bool initSpline(std::vector<double> ti, std::vector<double> pi, std::vector<double> vi);
 
   /**
      \brief Derivatives calculation using Catmull-Rom Spline construction for minimal accelerations
@@ -46,21 +41,21 @@ class Spline
      \brief Derivatives set to vector values
   */
   bool initDerivatives(std::vector<double> vi);
-  
+
   /**
      \brief Add a node
   */
-  bool addNode(double ti,double pi,double vi);
-  
+  bool addNode(double ti, double pi, double vi);
+
   /**
      \brief Evaluate spline for one value
   */
   double evalSpline(double t);
-  
+
   /**
      \brief Evaluate spline for a vector of values
   */
-  bool evalVectorSpline(std::vector<double> t, std::vector<double> & output);
+  bool evalVectorSpline(std::vector<double> t, std::vector<double>& output);
   std::vector<double> evalVectorSpline(std::vector<double> t);
 
   /**
@@ -71,15 +66,21 @@ class Spline
   /**
      \brief Accessors
   */
-  const std::vector<double> tAcces() const { return t; }
-  const std::vector<double> pAcces() const { return p; }
-  const std::vector<double> vAcces() const { return v; }
-  
- private:
+  const std::vector<double> tAcces() const
+  {
+    return t;
+  }
+  const std::vector<double> pAcces() const
+  {
+    return p;
+  }
+  const std::vector<double> vAcces() const
+  {
+    return v;
+  }
 
+private:
   std::vector<double> t, p, v;
-  
 };
 
 #endif
-

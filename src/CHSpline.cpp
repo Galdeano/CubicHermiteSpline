@@ -9,17 +9,14 @@
 
 #include <iostream>
 #include <algorithm>
-#include <vector> 
+#include <vector>
 #include <cstdlib>
 #include <cstdio>
 #include "CHSpline.h"
 
-
 namespace {
-  const bool CONTROLLER_BRIDGE_DEBUG = false;
+const bool CONTROLLER_BRIDGE_DEBUG = false;
 }
-
-
 
 Spline::Spline()
 {
@@ -37,10 +34,9 @@ Spline::Spline()
 
 Spline::~Spline()
 {
-	
 }
 
-bool Spline::initSpline(double ti0,double ti1,double pi0,double pi1,double vi0,double vi1)
+bool Spline::initSpline(double ti0, double ti1, double pi0, double pi1, double vi0, double vi1)
 {
   t.clear();
   p.clear();
@@ -52,77 +48,67 @@ bool Spline::initSpline(double ti0,double ti1,double pi0,double pi1,double vi0,d
   p.push_back(pi1);
   v.push_back(vi0);
   v.push_back(vi1);
-  
+
   return true;
-  	
 }
 
-bool Spline::initSpline(std::vector<double> ti,std::vector<double> pi,std::vector<double> vi)
+bool Spline::initSpline(std::vector<double> ti, std::vector<double> pi, std::vector<double> vi)
 {
   // check vector sizes
-  if ((ti.size()<2)||(pi.size()<2)||(vi.size()<2))
-  {
-	std::cerr << "Spline initialisation: Error in vector sizes (too small)" << std::endl;
-	return false;
+  if ((ti.size() < 2) || (pi.size() < 2) || (vi.size() < 2)) {
+    std::cerr << "Spline initialisation: Error in vector sizes (too small)" << std::endl;
+    return false;
   }
-  if (ti.size()!=pi.size())
-  {
-	std::cerr << "Spline initialisation: Different vector sizes for knot time and position" << std::endl;
-	return false;
+  if (ti.size() != pi.size()) {
+    std::cerr << "Spline initialisation: Different vector sizes for knot time and position" << std::endl;
+    return false;
   }
-  if ((vi.size()!=ti.size())&&(vi.size()!=2))
-  {
-	std::cerr << "Spline initialisation: Error in velocity vector size" << std::endl;
-	return false;
+  if ((vi.size() != ti.size()) && (vi.size() != 2)) {
+    std::cerr << "Spline initialisation: Error in velocity vector size" << std::endl;
+    return false;
   }
 
   // t is sorted
-  for (int i=1; i<ti.size();i++){
-    if ((ti[i]-ti[i-1])<0)
-    {
-	  std::cerr << "Spline initialisation: Error t vector is not sorted" << std::endl;
-	  return false;
-	}
+  for (int i = 1; i < ti.size(); i++) {
+    if ((ti[i] - ti[i - 1]) < 0) {
+      std::cerr << "Spline initialisation: Error t vector is not sorted" << std::endl;
+      return false;
+    }
   }
-  
-	
+
   t.clear();
   p.clear();
   v.clear();
 
-  t=ti;
-  p=pi;
+  t = ti;
+  p = pi;
 
-  //if more than two knot and only boundaries conditions for velocities
-  //use Catmull-Rom Spline construction: V_i=0.5*(p_(i+1)-p_(i+1))
-  if ((vi.size()==2)&&(t.size()!=2))
-  {
-	v.push_back(vi[0]);
-    for (int i=1; i<(t.size()-1);i++)
-    {
-      v.push_back(0.5*(((p[i]-p[i-1])*(t[i+1]-t[i]))/((t[i]-t[i-1])*(t[i+1]-t[i-1]))+((p[i+1]-p[i])*(t[i]-t[i-1]))/((t[i+1]-t[i])*(t[i+1]-t[i-1]))));
+  // if more than two knot and only boundaries conditions for velocities
+  // use Catmull-Rom Spline construction: V_i=0.5*(p_(i+1)-p_(i+1))
+  if ((vi.size() == 2) && (t.size() != 2)) {
+    v.push_back(vi[0]);
+    for (int i = 1; i < (t.size() - 1); i++) {
+      v.push_back(0.5 * (((p[i] - p[i - 1]) * (t[i + 1] - t[i])) / ((t[i] - t[i - 1]) * (t[i + 1] - t[i - 1])) +
+                         ((p[i + 1] - p[i]) * (t[i] - t[i - 1])) / ((t[i + 1] - t[i]) * (t[i + 1] - t[i - 1]))));
     }
     v.push_back(vi[1]);
+  } else {
+    v = vi;
   }
-  else
-  {
-    v=vi;
-  }
-  	
+
   return true;
 }
 
 bool Spline::initDerivativeCatmullRom()
 {
-  if (t.size()>2)
-  {
-	double vFront=v.front();
-	double vBack=v.back();
-	v.clear();
-	v.push_back(vFront);
-    for (int i=1; i<(t.size()-1);i++)
-    {
-      v.push_back(0.5*(((p[i]-p[i-1])*(t[i+1]-t[i]))/((t[i]-t[i-1])*(t[i+1]-t[i-1]))+((p[i+1]-p[i])*(t[i]-t[i-1]))/((t[i+1]-t[i])*(t[i+1]-t[i-1]))));
+  if (t.size() > 2) {
+    double vFront = v.front();
+    double vBack = v.back();
+    v.clear();
+    v.push_back(vFront);
+    for (int i = 1; i < (t.size() - 1); i++) {
+      v.push_back(0.5 * (((p[i] - p[i - 1]) * (t[i + 1] - t[i])) / ((t[i] - t[i - 1]) * (t[i + 1] - t[i - 1])) +
+                         ((p[i + 1] - p[i]) * (t[i] - t[i - 1])) / ((t[i + 1] - t[i]) * (t[i + 1] - t[i - 1]))));
     }
     v.push_back(vBack);
     return true;
@@ -132,83 +118,72 @@ bool Spline::initDerivativeCatmullRom()
 
 bool Spline::initDerivativezero()
 {
-  if (t.size()>2)
-  {
-	double vFront=v.front();
-	double vBack=v.back();
-	v.clear();
-	v.push_back(vFront);
-    for (int i=1; i<(t.size()-1);i++)
-    {
+  if (t.size() > 2) {
+    double vFront = v.front();
+    double vBack = v.back();
+    v.clear();
+    v.push_back(vFront);
+    for (int i = 1; i < (t.size() - 1); i++) {
       v.push_back(0.0);
     }
     v.push_back(vBack);
     return true;
-  }	
+  }
   return false;
 }
 
 bool Spline::initDerivatives(std::vector<double> vi)
 {
-  if (vi.size()==t.size())
-  {
-    v=vi;
+  if (vi.size() == t.size()) {
+    v = vi;
     return true;
   }
   return false;
 }
 
-
-bool Spline::addNode(double ti,double pi,double vi)
+bool Spline::addNode(double ti, double pi, double vi)
 {
 
-  if ((t.back())<ti)
-  {
+  if ((t.back()) < ti) {
     t.push_back(ti);
     p.push_back(pi);
     v.push_back(vi);
     return true;
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
 
-
 double Spline::evalSpline(double te)
 {
-  if (te<=t.front())
-  {
+  if (te <= t.front()) {
     return p.front();
   }
-  if (te>=t.back())
-  {
+  if (te >= t.back()) {
     return p.back();
   }
-  //deal with more than two knot
+  // deal with more than two knot
   std::vector<double>::iterator up;
   up = std::upper_bound(t.begin(), t.end(), te);
-  int noSpline = up - t.begin()-1;
-  
-  double tn= (te-t[noSpline])/(t[noSpline+1]-t[noSpline]);//normalized time
+  int noSpline = up - t.begin() - 1;
 
-  double h1 =  2*tn*tn*tn - 3*tn*tn + 1;          // calculate basis function 1
-  double h2 = -2*tn*tn*tn + 3*tn*tn;              // calculate basis function 2
-  double h3 =    tn*tn*tn - 2*tn*tn + tn;         // calculate basis function 3
-  double h4 =    tn*tn*tn -   tn*tn;              // calculate basis function 4
-  return  h1*p[noSpline] +                    // multiply and sum all functions
-          h2*p[noSpline+1] +                    // together to build the interpolated
-          h3*v[noSpline]*(t[noSpline+1]-t[noSpline]) +        // point along the curve.
-          h4*v[noSpline+1]*(t[noSpline+1]-t[noSpline]);
+  double tn = (te - t[noSpline]) / (t[noSpline + 1] - t[noSpline]); // normalized time
+
+  double h1 = 2 * tn * tn * tn - 3 * tn * tn + 1;             // calculate basis function 1
+  double h2 = -2 * tn * tn * tn + 3 * tn * tn;                // calculate basis function 2
+  double h3 = tn * tn * tn - 2 * tn * tn + tn;                // calculate basis function 3
+  double h4 = tn * tn * tn - tn * tn;                         // calculate basis function 4
+  return h1 * p[noSpline] +                                   // multiply and sum all functions
+         h2 * p[noSpline + 1] +                               // together to build the interpolated
+         h3 * v[noSpline] * (t[noSpline + 1] - t[noSpline]) + // point along the curve.
+         h4 * v[noSpline + 1] * (t[noSpline + 1] - t[noSpline]);
 }
 
-bool Spline::evalVectorSpline(std::vector<double> t, std::vector<double> & output)
+bool Spline::evalVectorSpline(std::vector<double> t, std::vector<double>& output)
 {
   output.clear();
-  for(int i = 0; i < t.size(); i++)
-  {
-	output.push_back(evalSpline(t[i]));
+  for (int i = 0; i < t.size(); i++) {
+    output.push_back(evalSpline(t[i]));
   }
   return true;
 }
@@ -217,9 +192,8 @@ std::vector<double> Spline::evalVectorSpline(std::vector<double> t)
 {
   std::vector<double> output;
   output.clear();
-  for(int i = 0; i < t.size(); i++)
-  {
-	output.push_back(evalSpline(t[i]));
+  for (int i = 0; i < t.size(); i++) {
+    output.push_back(evalSpline(t[i]));
   }
   return output;
 }
@@ -228,19 +202,18 @@ void Spline::printCoefficients()
 {
   std::cout << "Spline coefficients :" << std::endl;
   std::cout << "t :" << std::endl;
-  for (int i=0; i<t.size();i++){
+  for (int i = 0; i < t.size(); i++) {
     std::cout << t[i] << std::endl;
   }
   std::cout << "p :" << std::endl;
-  for (int i=0; i<p.size();i++){
+  for (int i = 0; i < p.size(); i++) {
     std::cout << p[i] << std::endl;
   }
   std::cout << "v :" << std::endl;
-  for (int i=0; i<v.size();i++){
+  for (int i = 0; i < v.size(); i++) {
     std::cout << v[i] << std::endl;
   }
 }
-
 
 /*
 clear all
@@ -273,7 +246,7 @@ axis equal
 
 %%
 
-%Bornes 
+%Bornes
 x0=0.5;
 x1=2.5;
 
@@ -313,5 +286,3 @@ plot(x,values);
 axis equal
 
 */
-
-

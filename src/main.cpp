@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
   if (argc == 1){
     printf("Demo mode, real usage: %s t0 t1 p0 p1 v0 v1 Np \n", argv[0]);
-    printf("As :  %s 0.0 5.0 -1.0 5.0 -1.0 0.0 100 \n", argv[0]);
+    printf("As :  %s 0.0 5.0 -1.0 5.0 -1.0 0.0 100 (as here)\n", argv[0]);
   }
 
   Spline Splines;

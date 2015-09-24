@@ -88,17 +88,17 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_VectorContentCheck)
   Sp.initSpline(ti, pi, vi);
 
   BOOST_CHECK_EQUAL(Sp.tAcces().size(), ti.size());
-  for (int i = 0; i < ti.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < ti.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.tAcces()[i], ti[i]);
   }
 
   BOOST_CHECK_EQUAL(Sp.pAcces().size(), pi.size());
-  for (int i = 0; i < pi.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < pi.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.pAcces()[i], pi[i]);
   }
 
   BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
-  for (int i = 0; i < vi.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
   }
 }
@@ -119,8 +119,7 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_ShortVector)
 {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0,
-         v3 = 2.2;
+  double t0 = 0.0, p0 = 1.1, v0 = -1.0;
 
   std::vector<double> ti, pi, vi;
   ti.clear();
@@ -257,13 +256,13 @@ BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors)
   BOOST_CHECK_EQUAL(Sp.pAcces().size(), pi.size());
   BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
 
-  for (int i = 0; i < ti.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < ti.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.tAcces()[i], ti[i]);
   }
-  for (int i = 0; i < pi.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < pi.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.pAcces()[i], pi[i]);
   }
-  for (int i = 0; i < vi.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
   }
 
@@ -279,13 +278,13 @@ BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors)
   BOOST_CHECK_EQUAL(Sp.pAcces().size(), pi.size());
   BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
 
-  for (int i = 0; i < ti.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < ti.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.tAcces()[i], ti[i]);
   }
-  for (int i = 0; i < pi.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < pi.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.pAcces()[i], pi[i]);
   }
-  for (int i = 0; i < vi.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
   }
 }
@@ -327,13 +326,13 @@ BOOST_AUTO_TEST_CASE(Derivative_Manipulation)
   BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
   BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
   BOOST_CHECK_EQUAL(Sp.vAcces().back(), v3);
-  for (int i = 1; i < vi.size() - 1; ++i) {
+  for (std::vector<double>::size_type i = 1; i < vi.size() - 1; ++i) {
     BOOST_CHECK_EQUAL(Sp.vAcces()[i], 0.0);
   }
 
   Sp.initDerivatives(vi);
   BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
-  for (int i = 0; i < vi.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
   }
 }
@@ -421,7 +420,7 @@ BOOST_AUTO_TEST_CASE(EvalVectorSplineParam_Boundaries)
   Sp.evalVectorSpline(ti, eval);
 
   BOOST_CHECK_EQUAL(eval.size(), pi.size());
-  for (int i = 0; i < ti.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < ti.size(); ++i) {
     BOOST_CHECK_EQUAL(eval[i], pi[i]);
   }
 }
@@ -457,7 +456,7 @@ BOOST_AUTO_TEST_CASE(EvalVectorSplineReturn_Boundaries2)
   std::vector<double> eval = Sp.evalVectorSpline(ti);
 
   BOOST_CHECK_EQUAL(eval.size(), pi.size());
-  for (int i = 0; i < ti.size(); ++i) {
+  for (std::vector<double>::size_type i = 0; i < ti.size(); ++i) {
     BOOST_CHECK_EQUAL(eval[i], pi[i]);
   }
 }

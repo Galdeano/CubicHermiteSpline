@@ -69,7 +69,7 @@ bool Spline::initSpline(std::vector<double> ti, std::vector<double> pi, std::vec
   }
 
   // t is sorted
-  for (int i = 1; i < ti.size(); i++) {
+  for (std::vector<double>::size_type i = 1; i < ti.size(); i++) {
     if ((ti[i] - ti[i - 1]) < 0) {
       std::cerr << "Spline initialisation: Error t vector is not sorted" << std::endl;
       return false;
@@ -182,7 +182,7 @@ double Spline::evalSpline(double te)
 bool Spline::evalVectorSpline(std::vector<double> t, std::vector<double>& output)
 {
   output.clear();
-  for (int i = 0; i < t.size(); i++) {
+  for (std::vector<double>::size_type i = 0; i < t.size(); i++) {
     output.push_back(evalSpline(t[i]));
   }
   return true;
@@ -192,7 +192,7 @@ std::vector<double> Spline::evalVectorSpline(std::vector<double> t)
 {
   std::vector<double> output;
   output.clear();
-  for (int i = 0; i < t.size(); i++) {
+  for (std::vector<double>::size_type i = 0; i < t.size(); i++) {
     output.push_back(evalSpline(t[i]));
   }
   return output;
@@ -202,15 +202,15 @@ void Spline::printCoefficients()
 {
   std::cout << "Spline coefficients :" << std::endl;
   std::cout << "t :" << std::endl;
-  for (int i = 0; i < t.size(); i++) {
+  for (std::vector<double>::size_type i = 0; i < t.size(); i++) {
     std::cout << t[i] << std::endl;
   }
   std::cout << "p :" << std::endl;
-  for (int i = 0; i < p.size(); i++) {
+  for (std::vector<double>::size_type i = 0; i < p.size(); i++) {
     std::cout << p[i] << std::endl;
   }
   std::cout << "v :" << std::endl;
-  for (int i = 0; i < v.size(); i++) {
+  for (std::vector<double>::size_type i = 0; i < v.size(); i++) {
     std::cout << v[i] << std::endl;
   }
 }

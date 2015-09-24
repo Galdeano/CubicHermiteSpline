@@ -167,6 +167,35 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_DifferentVectorSize)
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
 }
 
+BOOST_AUTO_TEST_CASE(InitialiserVector_VelocityBoundOnly)
+{
+  Spline Sp;
+
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, 
+         v3 = 2.2;
+
+  std::vector<double> ti, pi, vi;
+  ti.clear();
+  pi.clear();
+  vi.clear();
+  ti.push_back(t0);
+  ti.push_back(t1);
+  ti.push_back(t2);
+  ti.push_back(t3);
+
+  pi.push_back(p0);
+  pi.push_back(p1);
+  pi.push_back(p2);
+  pi.push_back(p3);
+
+  vi.push_back(v0);
+  vi.push_back(v3);
+  BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), true);
+  
+  BOOST_CHECK_EQUAL(Sp.vAcces().size(), 4);
+
+}
+
 BOOST_AUTO_TEST_CASE(InitialiserVector_ChronologicalTime)
 {
   Spline Sp;

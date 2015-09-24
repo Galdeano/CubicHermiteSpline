@@ -7,6 +7,11 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
 ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+SET(CMAKE_C_FLAGS="${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
+SET(CMAKE_EXE_LINKER_FLAGS="${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
+
 SET(PROJECT_DESCRIPTION "A library to compute cubic Hermite spline")
 SET(PROJECT_URL "http://github.com/Galdeano/CubicHermiteSpline")
 

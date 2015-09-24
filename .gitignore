@@ -1,4 +1,7 @@
 build/*
+lib/*
+bin/*
+*~
 
 # Compiled Object files
 *.slo

@@ -17,11 +17,11 @@ addons:
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8 -std=c++11 -DENABLE_REINFORCEMENT_LEARNING" CC="gcc-4.8"; fi
-  - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
-  - tar xf lcov_1.11.orig.tar.gz
-  - sudo make -C lcov-1.11/ install
+  #- wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
+  #- tar xf lcov_1.11.orig.tar.gz
+  #- sudo make -C lcov-1.11/ install
   # install lcov to coveralls conversion + upload tool
-  - gem install coveralls-lcov
+  #- gem install coveralls-lcov
 
 
 before_script:
@@ -35,7 +35,17 @@ script:
   - ctest
 
 after_success:
-  - lcov --directory . --capture --output-file coverage.info # capture coverage info
-  - lcov --remove coverage.info 'tests/*' '/usr/*' --output-file coverage.info # filter out system and test code
-  - lcov --list coverage.info # debug before upload
-  - coveralls-lcov --repo-token NU821XtKROnjjye6GKj7BWc8aiHMJEOO2 coverage.info # uploads to coveralls
+  #run initial
+  - lcov --capture --initial --directory .. --output-file cover
+  #run tests
+  - make test
+  #run final
+  - lcov --no-checksum --directory .. --capture --output-file cover.info 
+  #remove external dependencies
+  - lcov --remove cover.info 'usr/*' --output-file cover.info 
+  #remove test dependencies
+  - lcov --remove cover.info '*test*' --output-file cover.info 
+  #- lcov --directory . --capture --output-file coverage.info # capture coverage info
+  #- lcov --remove coverage.info 'tests/*' '/usr/*' --output-file coverage.info # filter out system and test code
+  - lcov --list cover.info # debug before upload
+  - coveralls-lcov --repo-token NU821XtKROnjjye6GKj7BWc8aiHMJEOO2 cover.info # uploads to coveralls

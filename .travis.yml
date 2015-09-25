@@ -9,14 +9,14 @@ addons:
     - ubuntu-toolchain-r-test
     - boost-latest
     packages:
-    - gcc-4.8
-    - g++-4.8
+    #- gcc-4.8
+    #- g++-4.8
     - libboost1.55-all-dev
     - cmake
     - lcov
 
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8 -std=c++11 -DENABLE_REINFORCEMENT_LEARNING" CC="gcc-4.8"; fi
+  #- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8 -std=c++11 -DENABLE_REINFORCEMENT_LEARNING" CC="gcc-4.8"; fi
   #- wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
   #- tar xf lcov_1.11.orig.tar.gz
   #- sudo make -C lcov-1.11/ install
@@ -49,3 +49,14 @@ after_success:
   #- lcov --remove coverage.info 'tests/*' '/usr/*' --output-file coverage.info # filter out system and test code
   - lcov --list cover.info # debug before upload
   - coveralls-lcov --repo-token NU821XtKROnjjye6GKj7BWc8aiHMJEOO2 cover.info # uploads to coveralls
+
+
+
+
+Capturing coverage data from .
+Found gcov version: 4.6.3
+Scanning . for .gcno files ...
+Found 5 graph files in .
+Processing src/CMakeFiles/CHSpline.dir/CHSpline.cpp.gcno
+geninfo: ERROR: /home/travis/build/Galdeano/CubicHermiteSpline/build/src/CMakeFiles/CHSpline.dir/CHSpline.cpp.gcno: reached unexpected end of file
+after_success.2

@@ -10,7 +10,7 @@
 BOOST_AUTO_TEST_SUITE(TestsCHSpline)
 
 // ------------- Tests Follow --------------
-BOOST_AUTO_TEST_CASE(DefaultConstructors)
+BOOST_AUTO_TEST_CASE(DefaultConstructors_NonDynamic)
 {
 
   Spline Sp;
@@ -19,6 +19,18 @@ BOOST_AUTO_TEST_CASE(DefaultConstructors)
   BOOST_CHECK(Sp.tAcces() == Sp2.tAcces());
   BOOST_CHECK(Sp.pAcces() == Sp2.pAcces());
   BOOST_CHECK(Sp.vAcces() == Sp2.vAcces());
+}
+
+BOOST_AUTO_TEST_CASE(DefaultConstructors_Dynamic)
+{
+
+  Spline Sp;
+  Spline* ptr_Sp2 = new Spline;
+
+  BOOST_CHECK(Sp.tAcces() == ptr_Sp2->tAcces());
+  BOOST_CHECK(Sp.pAcces() == ptr_Sp2->pAcces());
+  BOOST_CHECK(Sp.vAcces() == ptr_Sp2->vAcces());
+  delete ptr_Sp2;
 }
 
 BOOST_AUTO_TEST_CASE(DefaultConstructors_VectorSize)

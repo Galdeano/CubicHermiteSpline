@@ -1,7 +1,7 @@
 Cubic Hermite Spline
 ====================
 
-[![Build Status](https://travis-ci.org/Galdeano/CubicHermiteSpline.svg?branch=master)]
+![Build Status](https://travis-ci.org/Galdeano/CubicHermiteSpline.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/Galdeano/CubicHermiteSpline/badge.svg?branch=master&service=github)](https://coveralls.io/github/Galdeano/CubicHermiteSpline?branch=master)
 
 A library to compute cubic Hermite spline.

@@ -41,5 +41,5 @@ after_success:
   #remove test dependencies
   - lcov --remove cover.info '*test*' --output-file cover.info 
   - lcov --list cover.info # debug before upload
-  - coveralls-lcov --repo-token NU821XtKROnjjye6GKj7BWc8aiHMJEOO2 cover.info # uploads to coveralls
+  - coveralls-lcov cover.info # uploads to coveralls
 

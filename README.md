@@ -2,6 +2,7 @@ Cubic Hermite Spline
 ====================
 
 ![](https://travis-ci.org/Galdeano/CubicHermiteSpline.svg?branch=master)
+
 A library to compute cubic Hermite spline.
 
 

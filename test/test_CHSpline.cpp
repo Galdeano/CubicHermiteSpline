@@ -67,9 +67,6 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_VectorContentCheck)
          v3 = 2.2;
 
   std::vector<double> ti, pi, vi;
-  ti.clear();
-  pi.clear();
-  vi.clear();
   ti.push_back(t0);
   ti.push_back(t1);
   ti.push_back(t2);
@@ -108,9 +105,6 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_EmptyVector)
   Spline Sp;
 
   std::vector<double> ti, pi, vi;
-  ti.clear();
-  pi.clear();
-  vi.clear();
 
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
 }
@@ -122,14 +116,46 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_ShortVector)
   double t0 = 0.0, p0 = 1.1, v0 = -1.0;
 
   std::vector<double> ti, pi, vi;
-  ti.clear();
-  pi.clear();
-  vi.clear();
 
   ti.push_back(t0);
   pi.push_back(p0);
   vi.push_back(v0);
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
+
+  ti.push_back(t0);
+  BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
+  ti.pop_back();
+
+  pi.push_back(p0);
+  BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
+  pi.pop_back();
+
+  vi.push_back(v0);
+  BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
+  vi.pop_back();
+
+  ti.push_back(t0);
+  pi.push_back(p0);
+  BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
+  ti.pop_back();
+  pi.pop_back();
+
+  ti.push_back(t0);
+  vi.push_back(v0);
+  BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
+  ti.pop_back();
+  vi.pop_back();
+
+  pi.push_back(p0);
+  vi.push_back(v0);
+  BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
+  pi.pop_back();
+  vi.pop_back();
+
+  ti.push_back(t0);
+  pi.push_back(p0);
+  vi.push_back(v0);
+  BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), true);
 }
 
 BOOST_AUTO_TEST_CASE(InitialiserVector_DifferentVectorSize)
@@ -344,12 +370,12 @@ BOOST_AUTO_TEST_CASE(Derivative_Manipulation)
 
   Sp.initSpline(ti, pi, vi);
 
-  Sp.initDerivativeCatmullRom();
+  BOOST_CHECK_EQUAL(Sp.initDerivativeCatmullRom(), true);
   BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
   BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
   BOOST_CHECK_EQUAL(Sp.vAcces().back(), v3);
 
-  Sp.initDerivativezero();
+  BOOST_CHECK_EQUAL(Sp.initDerivativezero(), true);
   BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
   BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
   BOOST_CHECK_EQUAL(Sp.vAcces().back(), v3);
@@ -357,11 +383,87 @@ BOOST_AUTO_TEST_CASE(Derivative_Manipulation)
     BOOST_CHECK_EQUAL(Sp.vAcces()[i], 0.0);
   }
 
-  Sp.initDerivatives(vi);
+  BOOST_CHECK_EQUAL(Sp.initDerivatives(vi), true);
   BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
   for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
     BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
   }
+}
+
+BOOST_AUTO_TEST_CASE(Derivative_InefectiveIfNoIntermediaryNode)
+{
+  Spline Sp;
+
+  double t0 = 0.0, t1 = 2.2, p0 = 1.1, p1 = 5.0, v0 = -1.0, v1 = 4.2;
+
+  std::vector<double> ti, pi, vi;
+  ti.clear();
+  pi.clear();
+  vi.clear();
+  ti.push_back(t0);
+  ti.push_back(t1);
+
+  pi.push_back(p0);
+  pi.push_back(p1);
+
+  vi.push_back(v0);
+  vi.push_back(v1);
+
+  Sp.initSpline(ti, pi, vi);
+
+  Sp.initDerivativeCatmullRom();
+  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v1);
+
+  Sp.initDerivativezero();
+  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v1);
+
+  Sp.initDerivatives(vi);
+  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v1);
+}
+
+BOOST_AUTO_TEST_CASE(initDerivatives_WrongSizeVelocityVector)
+{
+  Spline Sp;
+
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0,
+         v3 = 2.2;
+
+  std::vector<double> ti, pi, vi;
+  ti.clear();
+  pi.clear();
+  vi.clear();
+  ti.push_back(t0);
+  ti.push_back(t1);
+  ti.push_back(t2);
+  ti.push_back(t3);
+
+  pi.push_back(p0);
+  pi.push_back(p1);
+  pi.push_back(p2);
+  pi.push_back(p3);
+
+  vi.push_back(v0);
+  vi.push_back(v1);
+  vi.push_back(v2);
+  vi.push_back(v3);
+
+  Sp.initSpline(ti, pi, vi);
+
+  BOOST_CHECK_EQUAL(Sp.initDerivatives(vi), true);
+  vi.push_back(v3);
+  BOOST_CHECK_EQUAL(Sp.initDerivatives(vi), false);
+  vi.pop_back();
+  BOOST_CHECK_EQUAL(Sp.initDerivatives(vi), true);
+  vi.pop_back();
+  BOOST_CHECK_EQUAL(Sp.initDerivatives(vi), false);
+  vi.pop_back();
+  BOOST_CHECK_EQUAL(Sp.initDerivatives(vi), false);
 }
 
 BOOST_AUTO_TEST_CASE(AddNode_VectorSize)

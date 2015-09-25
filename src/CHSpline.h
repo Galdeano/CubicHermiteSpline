@@ -68,19 +68,19 @@ public:
   */
   const std::vector<double> tAcces() const
   {
-    return t;
+    return t_;
   }
   const std::vector<double> pAcces() const
   {
-    return p;
+    return p_;
   }
   const std::vector<double> vAcces() const
   {
-    return v;
+    return v_;
   }
 
 private:
-  std::vector<double> t, p, v;
+  std::vector<double> t_, p_, v_;
 };
 
 #endif

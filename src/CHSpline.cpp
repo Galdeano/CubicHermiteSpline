@@ -87,7 +87,7 @@ bool Spline::initSpline(std::vector<double> ti, std::vector<double> pi, std::vec
   // use Catmull-Rom Spline construction: V_i=0.5*(p_(i+1)-p_(i+1))
   if ((vi.size() == 2) && (t.size() != 2)) {
     v.push_back(vi[0]);
-    for (int i = 1; i < (t.size() - 1); i++) {
+    for (std::vector<double>::size_type i = 1; i < (t.size() - 1); i++) {
       v.push_back(0.5 * (((p[i] - p[i - 1]) * (t[i + 1] - t[i])) / ((t[i] - t[i - 1]) * (t[i + 1] - t[i - 1])) +
                          ((p[i + 1] - p[i]) * (t[i] - t[i - 1])) / ((t[i + 1] - t[i]) * (t[i + 1] - t[i - 1]))));
     }
@@ -106,7 +106,7 @@ bool Spline::initDerivativeCatmullRom()
     double vBack = v.back();
     v.clear();
     v.push_back(vFront);
-    for (int i = 1; i < (t.size() - 1); i++) {
+    for (std::vector<double>::size_type i = 1; i < (t.size() - 1); i++) {
       v.push_back(0.5 * (((p[i] - p[i - 1]) * (t[i + 1] - t[i])) / ((t[i] - t[i - 1]) * (t[i + 1] - t[i - 1])) +
                          ((p[i + 1] - p[i]) * (t[i] - t[i - 1])) / ((t[i + 1] - t[i]) * (t[i + 1] - t[i - 1]))));
     }
@@ -123,7 +123,7 @@ bool Spline::initDerivativezero()
     double vBack = v.back();
     v.clear();
     v.push_back(vFront);
-    for (int i = 1; i < (t.size() - 1); i++) {
+    for (std::vector<double>::size_type i = 1; i < (t.size() - 1); i++) {
       v.push_back(0.0);
     }
     v.push_back(vBack);

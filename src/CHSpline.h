@@ -59,11 +59,6 @@ public:
   std::vector<double> evalVectorSpline(std::vector<double> t);
 
   /**
-     \brief Print the coefficient of the spline
-  */
-  void printCoefficients();
-
-  /**
      \brief Accessors
   */
   const std::vector<double> tAcces() const

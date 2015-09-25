@@ -12,6 +12,8 @@
 #include <vector>
 #include <cstdlib>
 #include <cstdio>
+#include <iomanip>
+#include <ostream>
 #include "CHSpline.h"
 
 namespace {
@@ -194,21 +196,3 @@ std::vector<double> Spline::evalVectorSpline(std::vector<double> t)
   }
   return output;
 }
-
-void Spline::printCoefficients()
-{
-  std::cout << "Spline coefficients :" << std::endl;
-  std::cout << "t :" << std::endl;
-  for (std::vector<double>::size_type i = 0; i < t_.size(); i++) {
-    std::cout << t_[i] << std::endl;
-  }
-  std::cout << "p :" << std::endl;
-  for (std::vector<double>::size_type i = 0; i < p_.size(); i++) {
-    std::cout << p_[i] << std::endl;
-  }
-  std::cout << "v :" << std::endl;
-  for (std::vector<double>::size_type i = 0; i < v_.size(); i++) {
-    std::cout << v_[i] << std::endl;
-  }
-}
-

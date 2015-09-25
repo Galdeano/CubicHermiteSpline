@@ -1,8 +1,15 @@
 language: cpp
 
+compiler:
+    - gcc
+
 before_script:
   - sudo apt-get update -qq
   - sudo apt-get install libboost-dev
 
-script: cmake . && make && make test
-
+script:
+    - mkdir _builds
+    - cd _builds
+    - cmake ..
+    - make
+    - ctest

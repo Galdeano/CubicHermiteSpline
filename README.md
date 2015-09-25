@@ -3,6 +3,9 @@ Cubic Hermite Spline
 
 A library to compute cubic Hermite spline.
 
+####Master branch build status: 
+![](https://travis-ci.org/Galdeano/CubicHermiteSpline.svg?branch=master)
+
 ## Compilation
 
 In order to compile:

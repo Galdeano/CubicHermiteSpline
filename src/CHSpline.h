@@ -5,7 +5,8 @@
 #include <deque>
 #include <cmath>
 
-class Spline {
+class Spline
+{
  public:
   /**
      \brief Constructor for Cubic Hermite splines implementation with first
@@ -66,9 +67,18 @@ class Spline {
   /**
      \brief Accessors
   */
-  const std::vector<double>& getTime() const { return t_; }
-  const std::vector<double>& getPosition() const { return p_; }
-  const std::vector<double>& getVelocity() const { return v_; }
+  const std::vector<double>& getTime() const
+  {
+    return t_;
+  }
+  const std::vector<double>& getPosition() const
+  {
+    return p_;
+  }
+  const std::vector<double>& getVelocity() const
+  {
+    return v_;
+  }
 
  private:
   std::vector<double> t_, p_, v_;

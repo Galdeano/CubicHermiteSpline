@@ -5,8 +5,7 @@
 #include <vector>
 #include "CHSpline.h"
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
 
   if ((argc != 1) && (argc != 8)) {
     printf("Usage: %s t0 t1 p0 p1 v0 v1 Np \n", argv[0]);

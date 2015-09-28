@@ -11,8 +11,7 @@
 BOOST_AUTO_TEST_SUITE(TestsCHSpline)
 
 // ------------- Tests Follow --------------
-BOOST_AUTO_TEST_CASE(DefaultConstructors_NonDynamic)
-{
+BOOST_AUTO_TEST_CASE(DefaultConstructors_NonDynamic) {
 
   Spline Sp;
   Spline Sp2;
@@ -22,11 +21,10 @@ BOOST_AUTO_TEST_CASE(DefaultConstructors_NonDynamic)
   BOOST_CHECK(Sp.getVelocity() == Sp2.getVelocity());
 }
 
-BOOST_AUTO_TEST_CASE(DefaultConstructors_Dynamic)
-{
+BOOST_AUTO_TEST_CASE(DefaultConstructors_Dynamic) {
 
   Spline Sp;
-  Spline* ptr_Sp2 = new Spline;
+  Spline* ptr_Sp2 = new Spline();
 
   BOOST_CHECK(Sp.getTime() == ptr_Sp2->getTime());
   BOOST_CHECK(Sp.getPosition() == ptr_Sp2->getPosition());
@@ -34,8 +32,7 @@ BOOST_AUTO_TEST_CASE(DefaultConstructors_Dynamic)
   delete ptr_Sp2;
 }
 
-BOOST_AUTO_TEST_CASE(DefaultConstructors_VectorSize)
-{
+BOOST_AUTO_TEST_CASE(DefaultConstructors_VectorSize) {
   Spline Sp;
 
   BOOST_CHECK_EQUAL(Sp.getTime().size(), 2);
@@ -43,8 +40,7 @@ BOOST_AUTO_TEST_CASE(DefaultConstructors_VectorSize)
   BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 2);
 }
 
-BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorSizeCheck)
-{
+BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorSizeCheck) {
   Spline Sp;
 
   double t0 = 0.0, t1 = 2.0, p0 = 1.0, p1 = 5.0, v0 = -1.0, v1 = 4.0;
@@ -56,8 +52,7 @@ BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorSizeCheck)
   BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 2);
 }
 
-BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorContentCheck)
-{
+BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorContentCheck) {
   Spline Sp;
 
   double t0 = 0.0, t1 = 2.0, p0 = 1.0, p1 = 5.0, v0 = -1.0, v1 = 4.0;
@@ -72,12 +67,11 @@ BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorContentCheck)
   BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v1);
 }
 
-BOOST_AUTO_TEST_CASE(InitialiserVector_VectorContentCheck)
-{
+BOOST_AUTO_TEST_CASE(InitialiserVector_VectorContentCheck) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0,
-         v3 = 2.2;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0,
+         p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0, v3 = 2.2;
 
   std::vector<double> ti, pi, vi;
   ti.push_back(t0);
@@ -113,8 +107,7 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_VectorContentCheck)
   }
 }
 
-BOOST_AUTO_TEST_CASE(InitialiserVector_EmptyVector)
-{
+BOOST_AUTO_TEST_CASE(InitialiserVector_EmptyVector) {
   Spline Sp;
 
   std::vector<double> ti, pi, vi;
@@ -122,8 +115,7 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_EmptyVector)
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
 }
 
-BOOST_AUTO_TEST_CASE(InitialiserVector_ShortVector)
-{
+BOOST_AUTO_TEST_CASE(InitialiserVector_ShortVector) {
   Spline Sp;
 
   double t0 = 0.0, p0 = 1.1, v0 = -1.0;
@@ -171,12 +163,11 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_ShortVector)
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), true);
 }
 
-BOOST_AUTO_TEST_CASE(InitialiserVector_DifferentVectorSize)
-{
+BOOST_AUTO_TEST_CASE(InitialiserVector_DifferentVectorSize) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0,
-         v3 = 2.2;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0,
+         p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0, v3 = 2.2;
 
   std::vector<double> ti, pi, vi;
   ti.clear();
@@ -206,11 +197,11 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_DifferentVectorSize)
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
 }
 
-BOOST_AUTO_TEST_CASE(InitialiserVector_VelocityBoundOnly)
-{
+BOOST_AUTO_TEST_CASE(InitialiserVector_VelocityBoundOnly) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v3 = 2.2;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0,
+         p3 = 5.4, v0 = -1.0, v3 = 2.2;
 
   std::vector<double> ti, pi, vi;
   ti.clear();
@@ -233,11 +224,11 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_VelocityBoundOnly)
   BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 4);
 }
 
-BOOST_AUTO_TEST_CASE(InitialiserVector_ChronologicalTime)
-{
+BOOST_AUTO_TEST_CASE(InitialiserVector_ChronologicalTime) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, p0 = 1.1, p1 = 5.0, p2 = 2.0, v0 = -1.0, v1 = 4.2, v2 = 3.0;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, p0 = 1.1, p1 = 5.0, p2 = 2.0, v0 = -1.0,
+         v1 = 4.2, v2 = 3.0;
 
   std::vector<double> ti, pi, vi;
   ti.clear();
@@ -263,8 +254,7 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_ChronologicalTime)
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
 }
 
-BOOST_AUTO_TEST_CASE(Initialiser_Consistency)
-{
+BOOST_AUTO_TEST_CASE(Initialiser_Consistency) {
 
   Spline Sp;
   Spline Sp2;
@@ -287,12 +277,11 @@ BOOST_AUTO_TEST_CASE(Initialiser_Consistency)
   BOOST_CHECK(Sp.getVelocity() == Sp2.getVelocity());
 }
 
-BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors)
-{
+BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors) {
   Spline Sp;
 
-  double t0 = 1.0, t1 = 2.0, t2 = 3.0, t3 = 4.0, p0 = 5.0, p1 = 6.0, p2 = 7.0, p3 = 8.0, v0 = 9.0, v1 = 10.0, v2 = 11.0,
-         v3 = 12.0;
+  double t0 = 1.0, t1 = 2.0, t2 = 3.0, t3 = 4.0, p0 = 5.0, p1 = 6.0, p2 = 7.0,
+         p3 = 8.0, v0 = 9.0, v1 = 10.0, v2 = 11.0, v3 = 12.0;
 
   Sp.initSpline(t0, t1, p0, p1, v0, v1);
 
@@ -355,12 +344,11 @@ BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors)
   }
 }
 
-BOOST_AUTO_TEST_CASE(Derivative_Manipulation)
-{
+BOOST_AUTO_TEST_CASE(Derivative_Manipulation) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0,
-         v3 = 2.2;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0,
+         p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0, v3 = 2.2;
 
   std::vector<double> ti, pi, vi;
   ti.clear();
@@ -403,8 +391,7 @@ BOOST_AUTO_TEST_CASE(Derivative_Manipulation)
   }
 }
 
-BOOST_AUTO_TEST_CASE(Derivative_InefectiveIfNoIntermediaryNode)
-{
+BOOST_AUTO_TEST_CASE(Derivative_InefectiveIfNoIntermediaryNode) {
   Spline Sp;
 
   double t0 = 0.0, t1 = 2.2, p0 = 1.1, p1 = 5.0, v0 = -1.0, v1 = 4.2;
@@ -440,12 +427,11 @@ BOOST_AUTO_TEST_CASE(Derivative_InefectiveIfNoIntermediaryNode)
   BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v1);
 }
 
-BOOST_AUTO_TEST_CASE(initDerivatives_WrongSizeVelocityVector)
-{
+BOOST_AUTO_TEST_CASE(initDerivatives_WrongSizeVelocityVector) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0,
-         v3 = 2.2;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0,
+         p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0, v3 = 2.2;
 
   std::vector<double> ti, pi, vi;
   ti.clear();
@@ -479,8 +465,7 @@ BOOST_AUTO_TEST_CASE(initDerivatives_WrongSizeVelocityVector)
   BOOST_CHECK_EQUAL(Sp.initDerivatives(vi), false);
 }
 
-BOOST_AUTO_TEST_CASE(AddNode_VectorSize)
-{
+BOOST_AUTO_TEST_CASE(AddNode_VectorSize) {
   Spline Sp;
 
   Sp.addNode(5.0, 2.0, 1.0);
@@ -490,8 +475,7 @@ BOOST_AUTO_TEST_CASE(AddNode_VectorSize)
   BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 3);
 }
 
-BOOST_AUTO_TEST_CASE(AddNode_Chronology)
-{
+BOOST_AUTO_TEST_CASE(AddNode_Chronology) {
   Spline Sp;
 
   double t0 = 0.0, t1 = 2.0, p0 = 1.0, p1 = 5.0, v0 = 0.0, v1 = 1.0;
@@ -504,8 +488,7 @@ BOOST_AUTO_TEST_CASE(AddNode_Chronology)
   BOOST_CHECK_EQUAL(Sp.addNode(validChronologicTime, 0.0, 0.0), true);
 }
 
-BOOST_AUTO_TEST_CASE(EvalSpline_MiddleValue)
-{
+BOOST_AUTO_TEST_CASE(EvalSpline_MiddleValue) {
   Spline Sp;
 
   double t0 = 0.0, t1 = 2.0, p0 = 1.0, p1 = 5.0, v0 = 0.0, v1 = 0.0;
@@ -515,11 +498,11 @@ BOOST_AUTO_TEST_CASE(EvalSpline_MiddleValue)
   BOOST_CHECK_EQUAL(Sp.evalSpline((t0 + t1) / 2), (p0 + p1) / 2);
 }
 
-BOOST_AUTO_TEST_CASE(EvalSpline_Boundaries)
-{
+BOOST_AUTO_TEST_CASE(EvalSpline_Boundaries) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.0, t2 = 4.0, p0 = 1.0, p1 = 5.0, p2 = 4.0, v0 = 0.0, v1 = -1.0, v2 = 2.0;
+  double t0 = 0.0, t1 = 2.0, t2 = 4.0, p0 = 1.0, p1 = 5.0, p2 = 4.0, v0 = 0.0,
+         v1 = -1.0, v2 = 2.0;
 
   Sp.initSpline(t0, t1, p0, p1, v0, v1);
 
@@ -530,12 +513,11 @@ BOOST_AUTO_TEST_CASE(EvalSpline_Boundaries)
   BOOST_CHECK_EQUAL(Sp.evalSpline(t2), p2);
 }
 
-BOOST_AUTO_TEST_CASE(EvalVectorSplineParam_Boundaries)
-{
+BOOST_AUTO_TEST_CASE(EvalVectorSplineParam_Boundaries) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0,
-         v3 = 2.2;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0,
+         p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0, v3 = 2.2;
 
   std::vector<double> ti, pi, vi;
   ti.clear();
@@ -567,12 +549,11 @@ BOOST_AUTO_TEST_CASE(EvalVectorSplineParam_Boundaries)
   }
 }
 
-BOOST_AUTO_TEST_CASE(EvalVectorSplineReturn_Boundaries2)
-{
+BOOST_AUTO_TEST_CASE(EvalVectorSplineReturn_Boundaries2) {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0, p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0,
-         v3 = 2.2;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0,
+         p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0, v3 = 2.2;
 
   std::vector<double> ti, pi, vi;
   ti.clear();

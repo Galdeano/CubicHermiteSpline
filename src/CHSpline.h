@@ -6,9 +6,10 @@
 #include <cmath>
 
 class Spline {
-public:
+ public:
   /**
-     \brief Constructor for Cubic Hermite splines implementation with first derivative end conditions
+     \brief Constructor for Cubic Hermite splines implementation with first
+     derivative end conditions
   */
   Spline();
 
@@ -20,15 +21,18 @@ public:
   /**
      \brief Initalise spline coefficients for two knot
   */
-  bool initSpline(double t0, double t1, double p0, double p1, double v0, double v1);
+  bool initSpline(double t0, double t1, double p0, double p1, double v0,
+                  double v1);
 
   /**
      \brief Initalise spline coefficients
   */
-  bool initSpline(std::vector<double> ti, std::vector<double> pi, std::vector<double> vi);
+  bool initSpline(std::vector<double> ti, std::vector<double> pi,
+                  std::vector<double> vi);
 
   /**
-     \brief Derivatives calculation using Catmull-Rom Spline construction for minimal accelerations
+     \brief Derivatives calculation using Catmull-Rom Spline construction for
+     minimal accelerations
   */
   bool initDerivativeCatmullRom();
 
@@ -55,26 +59,18 @@ public:
   /**
      \brief Evaluate spline for a vector of values
   */
-  bool evalVectorSpline(std::vector<double> t, std::vector<double>& output) const;
+  bool evalVectorSpline(std::vector<double> t,
+                        std::vector<double>& output) const;
   std::vector<double> evalVectorSpline(std::vector<double> t) const;
 
   /**
      \brief Accessors
   */
-  const std::vector<double>& getTime() const
-  {
-    return t_;
-  }
-  const std::vector<double>& getPosition() const
-  {
-    return p_;
-  }
-  const std::vector<double>& getVelocity() const
-  {
-    return v_;
-  }
+  const std::vector<double>& getTime() const { return t_; }
+  const std::vector<double>& getPosition() const { return p_; }
+  const std::vector<double>& getVelocity() const { return v_; }
 
-private:
+ private:
   std::vector<double> t_, p_, v_;
 };
 

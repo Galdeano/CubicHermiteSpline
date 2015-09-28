@@ -154,7 +154,7 @@ bool Spline::addNode(double ti, double pi, double vi)
   }
 }
 
-double Spline::evalSpline(double te)
+double Spline::evalSpline(double te) const
 {
   if (te <= t_.front()) {
     return p_.front();
@@ -163,7 +163,7 @@ double Spline::evalSpline(double te)
     return p_.back();
   }
   // deal with more than two knot
-  std::vector<double>::iterator up;
+  std::vector<double>::const_iterator up;
   up = std::upper_bound(t_.begin(), t_.end(), te);
   int noSpline = up - t_.begin() - 1;
 
@@ -179,7 +179,7 @@ double Spline::evalSpline(double te)
          h4 * v_[noSpline + 1] * (t_[noSpline + 1] - t_[noSpline]);
 }
 
-bool Spline::evalVectorSpline(std::vector<double> t, std::vector<double>& output)
+bool Spline::evalVectorSpline(std::vector<double> t, std::vector<double>& output) const
 {
   output.clear();
   for (std::vector<double>::size_type i = 0; i < t.size(); i++) {
@@ -188,7 +188,7 @@ bool Spline::evalVectorSpline(std::vector<double> t, std::vector<double>& output
   return true;
 }
 
-std::vector<double> Spline::evalVectorSpline(std::vector<double> t)
+std::vector<double> Spline::evalVectorSpline(std::vector<double> t) const
 {
   std::vector<double> output;
   for (std::vector<double>::size_type i = 0; i < t.size(); i++) {

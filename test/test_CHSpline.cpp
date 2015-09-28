@@ -17,9 +17,9 @@ BOOST_AUTO_TEST_CASE(DefaultConstructors_NonDynamic)
   Spline Sp;
   Spline Sp2;
 
-  BOOST_CHECK(Sp.tAcces() == Sp2.tAcces());
-  BOOST_CHECK(Sp.pAcces() == Sp2.pAcces());
-  BOOST_CHECK(Sp.vAcces() == Sp2.vAcces());
+  BOOST_CHECK(Sp.getTime() == Sp2.getTime());
+  BOOST_CHECK(Sp.getPosition() == Sp2.getPosition());
+  BOOST_CHECK(Sp.getVelocity() == Sp2.getVelocity());
 }
 
 BOOST_AUTO_TEST_CASE(DefaultConstructors_Dynamic)
@@ -28,9 +28,9 @@ BOOST_AUTO_TEST_CASE(DefaultConstructors_Dynamic)
   Spline Sp;
   Spline* ptr_Sp2 = new Spline;
 
-  BOOST_CHECK(Sp.tAcces() == ptr_Sp2->tAcces());
-  BOOST_CHECK(Sp.pAcces() == ptr_Sp2->pAcces());
-  BOOST_CHECK(Sp.vAcces() == ptr_Sp2->vAcces());
+  BOOST_CHECK(Sp.getTime() == ptr_Sp2->getTime());
+  BOOST_CHECK(Sp.getPosition() == ptr_Sp2->getPosition());
+  BOOST_CHECK(Sp.getVelocity() == ptr_Sp2->getVelocity());
   delete ptr_Sp2;
 }
 
@@ -38,9 +38,9 @@ BOOST_AUTO_TEST_CASE(DefaultConstructors_VectorSize)
 {
   Spline Sp;
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().size(), 2);
-  BOOST_CHECK_EQUAL(Sp.pAcces().size(), 2);
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 2);
 }
 
 BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorSizeCheck)
@@ -51,9 +51,9 @@ BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorSizeCheck)
 
   Sp.initSpline(t0, t1, p0, p1, v0, v1);
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().size(), 2);
-  BOOST_CHECK_EQUAL(Sp.pAcces().size(), 2);
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 2);
 }
 
 BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorContentCheck)
@@ -64,12 +64,12 @@ BOOST_AUTO_TEST_CASE(InitialiserDouble_VectorContentCheck)
 
   Sp.initSpline(t0, t1, p0, p1, v0, v1);
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().front(), t0);
-  BOOST_CHECK_EQUAL(Sp.tAcces().back(), t1);
-  BOOST_CHECK_EQUAL(Sp.pAcces().front(), p0);
-  BOOST_CHECK_EQUAL(Sp.pAcces().back(), p1);
-  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
-  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v1);
+  BOOST_CHECK_EQUAL(Sp.getTime().front(), t0);
+  BOOST_CHECK_EQUAL(Sp.getTime().back(), t1);
+  BOOST_CHECK_EQUAL(Sp.getPosition().front(), p0);
+  BOOST_CHECK_EQUAL(Sp.getPosition().back(), p1);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v1);
 }
 
 BOOST_AUTO_TEST_CASE(InitialiserVector_VectorContentCheck)
@@ -97,19 +97,19 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_VectorContentCheck)
 
   Sp.initSpline(ti, pi, vi);
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().size(), ti.size());
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), ti.size());
   for (std::vector<double>::size_type i = 0; i < ti.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.tAcces()[i], ti[i]);
+    BOOST_CHECK_EQUAL(Sp.getTime()[i], ti[i]);
   }
 
-  BOOST_CHECK_EQUAL(Sp.pAcces().size(), pi.size());
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), pi.size());
   for (std::vector<double>::size_type i = 0; i < pi.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.pAcces()[i], pi[i]);
+    BOOST_CHECK_EQUAL(Sp.getPosition()[i], pi[i]);
   }
 
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
   for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
+    BOOST_CHECK_EQUAL(Sp.getVelocity()[i], vi[i]);
   }
 }
 
@@ -230,7 +230,7 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_VelocityBoundOnly)
   vi.push_back(v3);
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), true);
 
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), 4);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 4);
 }
 
 BOOST_AUTO_TEST_CASE(InitialiserVector_ChronologicalTime)
@@ -282,9 +282,9 @@ BOOST_AUTO_TEST_CASE(Initialiser_Consistency)
   vi.push_back(v1);
   Sp2.initSpline(ti, pi, vi);
 
-  BOOST_CHECK(Sp.tAcces() == Sp2.tAcces());
-  BOOST_CHECK(Sp.pAcces() == Sp2.pAcces());
-  BOOST_CHECK(Sp.vAcces() == Sp2.vAcces());
+  BOOST_CHECK(Sp.getTime() == Sp2.getTime());
+  BOOST_CHECK(Sp.getPosition() == Sp2.getPosition());
+  BOOST_CHECK(Sp.getVelocity() == Sp2.getVelocity());
 }
 
 BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors)
@@ -298,16 +298,16 @@ BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors)
 
   Sp.initSpline(t1, t2, p1, p2, v1, v2);
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().size(), 2);
-  BOOST_CHECK_EQUAL(Sp.pAcces().size(), 2);
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 2);
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().front(), t1);
-  BOOST_CHECK_EQUAL(Sp.tAcces().back(), t2);
-  BOOST_CHECK_EQUAL(Sp.pAcces().front(), p1);
-  BOOST_CHECK_EQUAL(Sp.pAcces().back(), p2);
-  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v1);
-  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v2);
+  BOOST_CHECK_EQUAL(Sp.getTime().front(), t1);
+  BOOST_CHECK_EQUAL(Sp.getTime().back(), t2);
+  BOOST_CHECK_EQUAL(Sp.getPosition().front(), p1);
+  BOOST_CHECK_EQUAL(Sp.getPosition().back(), p2);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v1);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v2);
 
   std::vector<double> ti, pi, vi;
   ti.push_back(t0);
@@ -318,18 +318,18 @@ BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors)
   vi.push_back(v1);
   Sp.initSpline(ti, pi, vi);
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().size(), ti.size());
-  BOOST_CHECK_EQUAL(Sp.pAcces().size(), pi.size());
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), ti.size());
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), pi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
 
   for (std::vector<double>::size_type i = 0; i < ti.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.tAcces()[i], ti[i]);
+    BOOST_CHECK_EQUAL(Sp.getTime()[i], ti[i]);
   }
   for (std::vector<double>::size_type i = 0; i < pi.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.pAcces()[i], pi[i]);
+    BOOST_CHECK_EQUAL(Sp.getPosition()[i], pi[i]);
   }
   for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
+    BOOST_CHECK_EQUAL(Sp.getVelocity()[i], vi[i]);
   }
 
   ti.push_back(t2);
@@ -340,18 +340,18 @@ BOOST_AUTO_TEST_CASE(Initialiser_ResetOldVectors)
   vi.push_back(v3);
   Sp.initSpline(ti, pi, vi);
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().size(), ti.size());
-  BOOST_CHECK_EQUAL(Sp.pAcces().size(), pi.size());
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), ti.size());
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), pi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
 
   for (std::vector<double>::size_type i = 0; i < ti.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.tAcces()[i], ti[i]);
+    BOOST_CHECK_EQUAL(Sp.getTime()[i], ti[i]);
   }
   for (std::vector<double>::size_type i = 0; i < pi.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.pAcces()[i], pi[i]);
+    BOOST_CHECK_EQUAL(Sp.getPosition()[i], pi[i]);
   }
   for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
+    BOOST_CHECK_EQUAL(Sp.getVelocity()[i], vi[i]);
   }
 }
 
@@ -384,22 +384,22 @@ BOOST_AUTO_TEST_CASE(Derivative_Manipulation)
   Sp.initSpline(ti, pi, vi);
 
   BOOST_CHECK_EQUAL(Sp.initDerivativeCatmullRom(), true);
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
-  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
-  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v3);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v3);
 
   BOOST_CHECK_EQUAL(Sp.initDerivativezero(), true);
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
-  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
-  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v3);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v3);
   for (std::vector<double>::size_type i = 1; i < vi.size() - 1; ++i) {
-    BOOST_CHECK_EQUAL(Sp.vAcces()[i], 0.0);
+    BOOST_CHECK_EQUAL(Sp.getVelocity()[i], 0.0);
   }
 
   BOOST_CHECK_EQUAL(Sp.initDerivatives(vi), true);
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
   for (std::vector<double>::size_type i = 0; i < vi.size(); ++i) {
-    BOOST_CHECK_EQUAL(Sp.vAcces()[i], vi[i]);
+    BOOST_CHECK_EQUAL(Sp.getVelocity()[i], vi[i]);
   }
 }
 
@@ -425,19 +425,19 @@ BOOST_AUTO_TEST_CASE(Derivative_InefectiveIfNoIntermediaryNode)
   Sp.initSpline(ti, pi, vi);
 
   Sp.initDerivativeCatmullRom();
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
-  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
-  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v1);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v1);
 
   Sp.initDerivativezero();
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
-  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
-  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v1);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v1);
 
   Sp.initDerivatives(vi);
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), vi.size());
-  BOOST_CHECK_EQUAL(Sp.vAcces().front(), v0);
-  BOOST_CHECK_EQUAL(Sp.vAcces().back(), v1);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
+  BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v1);
 }
 
 BOOST_AUTO_TEST_CASE(initDerivatives_WrongSizeVelocityVector)
@@ -485,9 +485,9 @@ BOOST_AUTO_TEST_CASE(AddNode_VectorSize)
 
   Sp.addNode(5.0, 2.0, 1.0);
 
-  BOOST_CHECK_EQUAL(Sp.tAcces().size(), 3);
-  BOOST_CHECK_EQUAL(Sp.pAcces().size(), 3);
-  BOOST_CHECK_EQUAL(Sp.vAcces().size(), 3);
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), 3);
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), 3);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 3);
 }
 
 BOOST_AUTO_TEST_CASE(AddNode_Chronology)

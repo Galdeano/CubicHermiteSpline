@@ -205,8 +205,7 @@ double Spline::evalSpline(double te) const
   // deal with more than two knot
   std::vector<double>::const_iterator up;
   up = std::upper_bound(t_.begin(), t_.end(), te);
-  std::vector<double>::size_type one = 1;
-  std::vector<double>::size_type noSpline = up - t_.begin() - one;
+  long noSpline = up - t_.begin() - 1;
 
   double tn = (te - t_[noSpline]) /
               (t_[noSpline + 1] - t_[noSpline]);  // normalized time

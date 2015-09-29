@@ -13,6 +13,8 @@ addons:
     - libboost1.55-all-dev
     - cmake
     - lcov
+    - doxygen
+    - graphviz
 
 install:
   # install lcov to coveralls conversion + upload tool

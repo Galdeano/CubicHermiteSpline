@@ -6,7 +6,7 @@
 #include <sstream>
 #include <map>
 #include <vector>
-#include "CHSpline.h"
+#include "CHSpline/CHSpline.h"
 
 BOOST_AUTO_TEST_SUITE(TestsCHSpline)
 

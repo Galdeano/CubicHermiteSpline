@@ -3,7 +3,7 @@
 #include <cstdlib> /* atoi */
 #include <iostream>
 #include <vector>
-#include "CHSpline.h"
+#include "CHSpline/CHSpline.h"
 
 int main(int argc, char* argv[])
 {

@@ -15,7 +15,7 @@
 #include <cstdio>
 #include <iomanip>
 #include <ostream>
-#include "CHSpline.h"
+#include "CHSpline/CHSpline.h"
 
 namespace
 {

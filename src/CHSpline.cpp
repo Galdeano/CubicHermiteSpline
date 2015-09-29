@@ -188,7 +188,7 @@ bool Spline::addNode(double ti, double pi, double vi)
   }
 }
 
-double Spline::evalSpline(double te)
+double Spline::evalSpline(double te) const
 {
   if (te <= t_.front())
   {
@@ -199,6 +199,7 @@ double Spline::evalSpline(double te)
     return p_.back();
   }
 
+  //Find the right knot
   std::vector<double>::size_type noSpline = 0;
   for (std::vector<double>::size_type i = 0; i < t_.size(); ++i)
   {
@@ -223,7 +224,7 @@ double Spline::evalSpline(double te)
 }
 
 bool Spline::evalVectorSpline(std::vector<double> t,
-                              std::vector<double>& output)
+                              std::vector<double>& output) const
 {
   output.clear();
   for (std::vector<double>::size_type i = 0; i < t.size(); i++)
@@ -233,7 +234,7 @@ bool Spline::evalVectorSpline(std::vector<double> t,
   return true;
 }
 
-std::vector<double> Spline::evalVectorSpline(std::vector<double> t)
+std::vector<double> Spline::evalVectorSpline(std::vector<double> t) const
 {
   std::vector<double> output;
   for (std::vector<double>::size_type i = 0; i < t.size(); i++)

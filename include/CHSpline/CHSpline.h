@@ -62,13 +62,14 @@ class Spline
   /**
      \brief Evaluate spline for one value
   */
-  double evalSpline(double t);
+  double evalSpline(double t) const;
 
   /**
      \brief Evaluate spline for a vector of values
   */
-  bool evalVectorSpline(std::vector<double> t, std::vector<double>& output);
-  std::vector<double> evalVectorSpline(std::vector<double> t);
+  bool evalVectorSpline(std::vector<double> t,
+                        std::vector<double>& output) const;
+  std::vector<double> evalVectorSpline(std::vector<double> t) const;
 
   /**
      \brief Accessors

@@ -8,6 +8,7 @@ include(cmake/pkg-config.cmake)
 
 
 set(PROJECT_NAME CubicHermiteSpline)
+set(PROJECT_VERSION 1.3)
 set(PROJECT_DESCRIPTION "A library to compute cubic Hermite spline")
 set(PROJECT_URL "http://github.com/Galdeano/CubicHermiteSpline")
 

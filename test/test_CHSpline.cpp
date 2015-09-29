@@ -10,6 +10,10 @@
 
 BOOST_AUTO_TEST_SUITE(TestsCHSpline)
 
+class TestDerived : public Spline
+{
+};
+
 // ------------- Tests Follow --------------
 BOOST_AUTO_TEST_CASE(DefaultConstructors_NonDynamic)
 {
@@ -26,10 +30,46 @@ BOOST_AUTO_TEST_CASE(DefaultConstructors_Dynamic)
   Spline Sp;
   Spline* ptr_Sp2 = new Spline();
 
-  BOOST_CHECK(Sp.getTime() == ptr_Sp2->getTime());
-  BOOST_CHECK(Sp.getPosition() == ptr_Sp2->getPosition());
-  BOOST_CHECK(Sp.getVelocity() == ptr_Sp2->getVelocity());
+  double t0 = 0.0, t1 = 2.0, p0 = 1.0, p1 = 5.0, v0 = -1.0, v1 = 4.0;
+
+  ptr_Sp2->initSpline(t0, t1, p0, p1, v0, v1);
+
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 2);
+
+  BOOST_CHECK_EQUAL(ptr_Sp2->getTime().size(), 2);
+  BOOST_CHECK_EQUAL(ptr_Sp2->getPosition().size(), 2);
+  BOOST_CHECK_EQUAL(ptr_Sp2->getVelocity().size(), 2);
   delete ptr_Sp2;
+}
+
+BOOST_AUTO_TEST_CASE(DerivedConstructors)
+{
+  Spline* myTestDerived = new TestDerived();
+
+  BOOST_CHECK_EQUAL(myTestDerived->getTime().size(), 2);
+  BOOST_CHECK_EQUAL(myTestDerived->getPosition().size(), 2);
+  BOOST_CHECK_EQUAL(myTestDerived->getVelocity().size(), 2);
+  delete myTestDerived;
+
+  TestDerived myTestDerived2;
+}
+
+BOOST_AUTO_TEST_CASE(ConstructorWithDouble_VectorSizeCheck)
+{
+  double t0 = 0.0, t1 = 2.0, p0 = 1.0, p1 = 5.0, v0 = -1.0, v1 = 4.0;
+
+  Spline Sp(t0, t1, p0, p1, v0, v1);
+  Spline* ptr_Sp2 = new Spline(t0, t1, p0, p1, v0, v1);
+
+  BOOST_CHECK_EQUAL(Sp.getTime().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getPosition().size(), 2);
+  BOOST_CHECK_EQUAL(Sp.getVelocity().size(), 2);
+
+  BOOST_CHECK_EQUAL(ptr_Sp2->getTime().size(), 2);
+  BOOST_CHECK_EQUAL(ptr_Sp2->getPosition().size(), 2);
+  BOOST_CHECK_EQUAL(ptr_Sp2->getVelocity().size(), 2);
 }
 
 BOOST_AUTO_TEST_CASE(DefaultConstructors_VectorSize)

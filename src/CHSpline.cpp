@@ -32,6 +32,17 @@ Spline::Spline()
   v_.push_back(0.0);
 }
 
+Spline::Spline(double ti0, double ti1, double pi0, double pi1, double vi0,
+               double vi1)
+{
+  t_.push_back(ti0);
+  t_.push_back(ti1);
+  p_.push_back(pi0);
+  p_.push_back(pi1);
+  v_.push_back(vi0);
+  v_.push_back(vi1);
+}
+
 Spline::~Spline()
 {
 }

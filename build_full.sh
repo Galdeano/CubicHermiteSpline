@@ -25,7 +25,6 @@ lcov --remove cover.info 'usr/*' --output-file cover.info
 lcov --remove cover.info '*test*' --output-file cover.info 
 #generate HTML report
 genhtml --highlight --legend --show-details -o html_coverage cover.info
-
 #clean
 rm -f cover cover.info
-make clean
+

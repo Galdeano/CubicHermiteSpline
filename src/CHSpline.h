@@ -9,10 +9,17 @@ class Spline
 {
  public:
   /**
-     \brief Constructor for Cubic Hermite splines implementation with first
+     \brief Default constructor for Cubic Hermite splines implementation with
+     first
      derivative end conditions
   */
   Spline();
+
+  /**
+     \brief Constructor for Cubic Hermite splines implementation with two knot
+  */
+  Spline(double ti0, double ti1, double pi0, double pi1, double vi0,
+         double vi1);
 
   /**
      \brief Destructor

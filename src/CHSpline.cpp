@@ -14,13 +14,9 @@
 #include <cstdlib>
 #include <cstdio>
 #include <iomanip>
+#include <limits>
 #include <ostream>
 #include "CHSpline/CHSpline.h"
-
-namespace
-{
-const bool CONTROLLER_BRIDGE_DEBUG = false;
-}
 
 Spline::Spline()
 {
@@ -192,7 +188,7 @@ bool Spline::addNode(double ti, double pi, double vi)
   }
 }
 
-double Spline::evalSpline(double te) const
+double Spline::evalSpline(double te)
 {
   if (te <= t_.front())
   {
@@ -202,10 +198,15 @@ double Spline::evalSpline(double te) const
   {
     return p_.back();
   }
-  // deal with more than two knot
-  std::vector<double>::const_iterator up;
-  up = std::upper_bound(t_.begin(), t_.end(), te);
-  long noSpline = up - t_.begin() - 1;
+
+  std::vector<double>::size_type noSpline = 0;
+  for (std::vector<double>::size_type i = 0; i < t_.size(); ++i)
+  {
+    if (!(te < t_[i]))
+    {
+      noSpline = i;
+    }
+  }
 
   double tn = (te - t_[noSpline]) /
               (t_[noSpline + 1] - t_[noSpline]);  // normalized time
@@ -222,7 +223,7 @@ double Spline::evalSpline(double te) const
 }
 
 bool Spline::evalVectorSpline(std::vector<double> t,
-                              std::vector<double>& output) const
+                              std::vector<double>& output)
 {
   output.clear();
   for (std::vector<double>::size_type i = 0; i < t.size(); i++)
@@ -232,7 +233,7 @@ bool Spline::evalVectorSpline(std::vector<double> t,
   return true;
 }
 
-std::vector<double> Spline::evalVectorSpline(std::vector<double> t) const
+std::vector<double> Spline::evalVectorSpline(std::vector<double> t)
 {
   std::vector<double> output;
   for (std::vector<double>::size_type i = 0; i < t.size(); i++)

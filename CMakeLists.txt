@@ -6,7 +6,6 @@ include(cmake/base.cmake)
 include(cmake/boost.cmake)
 include(cmake/pkg-config.cmake)
 
-
 set(PROJECT_NAME CubicHermiteSpline)
 set(PROJECT_VERSION 1.3)
 set(PROJECT_DESCRIPTION "A library to compute cubic Hermite spline")

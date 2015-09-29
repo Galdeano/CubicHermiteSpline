@@ -43,7 +43,6 @@ int main(int argc, char* argv[])
   pi.push_back(p1);
   vi.push_back(v0);
   vi.push_back(v1);
-  Splines.initSpline(ti, pi, vi);
 
   Splines.initSpline(ti, pi, vi);
   std::cout << "Spline=[";

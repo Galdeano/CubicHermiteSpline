@@ -6,7 +6,7 @@
 #include <sstream>
 #include <map>
 #include <vector>
-#include "CHSpline.h"
+#include "CHSpline/CHSpline.h"
 
 BOOST_AUTO_TEST_SUITE(TestsCHSpline)
 
@@ -624,8 +624,9 @@ BOOST_AUTO_TEST_CASE(EvalVectorSplineReturn_Boundaries2)
 {
   Spline Sp;
 
-  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, p0 = 1.1, p1 = 5.0, p2 = 2.0,
-         p3 = 5.4, v0 = -1.0, v1 = 4.2, v2 = 3.0, v3 = 2.2;
+  double t0 = 0.0, t1 = 2.2, t2 = 4.0, t3 = 6.2, t4 = 8.2, p0 = 1.1, p1 = 5.0,
+         p2 = 2.0, p3 = 5.4, p4 = 3.7, v0 = -1.0, v1 = 4.2, v2 = 3.0, v3 = 2.2,
+         v4 = 0.2;
 
   std::vector<double> ti, pi, vi;
   ti.clear();
@@ -635,16 +636,19 @@ BOOST_AUTO_TEST_CASE(EvalVectorSplineReturn_Boundaries2)
   ti.push_back(t1);
   ti.push_back(t2);
   ti.push_back(t3);
+  ti.push_back(t4);
 
   pi.push_back(p0);
   pi.push_back(p1);
   pi.push_back(p2);
   pi.push_back(p3);
+  pi.push_back(p4);
 
   vi.push_back(v0);
   vi.push_back(v1);
   vi.push_back(v2);
   vi.push_back(v3);
+  vi.push_back(v4);
 
   Sp.initSpline(ti, pi, vi);
 

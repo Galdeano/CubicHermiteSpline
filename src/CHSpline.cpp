@@ -14,13 +14,9 @@
 #include <cstdlib>
 #include <cstdio>
 #include <iomanip>
+#include <limits>
 #include <ostream>
-#include "CHSpline.h"
-
-namespace
-{
-const bool CONTROLLER_BRIDGE_DEBUG = false;
-}
+#include "CHSpline/CHSpline.h"
 
 Spline::Spline()
 {
@@ -202,10 +198,16 @@ double Spline::evalSpline(double te) const
   {
     return p_.back();
   }
-  // deal with more than two knot
-  std::vector<double>::const_iterator up;
-  up = std::upper_bound(t_.begin(), t_.end(), te);
-  int noSpline = up - t_.begin() - 1;
+
+  //Find the right knot
+  std::vector<double>::size_type noSpline = 0;
+  for (std::vector<double>::size_type i = 0; i < t_.size(); ++i)
+  {
+    if (!(te < t_[i]))
+    {
+      noSpline = i;
+    }
+  }
 
   double tn = (te - t_[noSpline]) /
               (t_[noSpline + 1] - t_[noSpline]);  // normalized time

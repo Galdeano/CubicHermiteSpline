@@ -17,7 +17,7 @@ addons:
 install:
   # install lcov to coveralls conversion + upload tool
   - gem install coveralls-lcov
-
+  - sudo apt-get install --yes doxygen graphviz
 
 before_script:
   - mkdir build

@@ -50,7 +50,7 @@ add_subdirectory (test)
 
 if (VALGRIND_CHECK)
     ADD_CUSTOM_TARGET(valgrind_check
-        # Run tests
+    
     COMMAND ${VALGRIND_PATH} --trace-children=yes --quiet --tool=memcheck
                              --leak-check=yes --show-reachable=yes
                              --num-callers=50 --verbose --demangle=yes

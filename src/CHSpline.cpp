@@ -9,13 +9,9 @@
  */
 
 #include <iostream>
-#include <algorithm>
 #include <vector>
 #include <cstdlib>
 #include <cstdio>
-#include <iomanip>
-#include <limits>
-#include <ostream>
 #include "CHSpline/CHSpline.h"
 
 Spline::Spline()

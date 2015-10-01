@@ -1,0 +1,121 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Cubichermitespline</title>
+  <meta name="description" content="A library to compute cubic Hermite spline.">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Cubichermitespline</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">A library to compute cubic Hermite spline.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/Galdeano/CubicHermiteSpline/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/Galdeano/CubicHermiteSpline/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/Galdeano/CubicHermiteSpline" class="code">View Cubichermitespline on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a id="cubic-hermite-spline" class="anchor" href="#cubic-hermite-spline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cubic Hermite Spline</h1>
+
+<p><img src="https://travis-ci.org/Galdeano/CubicHermiteSpline.svg?branch=master" alt="Build Status">
+<a href="https://coveralls.io/github/Galdeano/CubicHermiteSpline?branch=master"><img src="https://coveralls.io/repos/Galdeano/CubicHermiteSpline/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a></p>
+
+<p>A library to compute cubic Hermite spline.</p>
+
+<h2>
+<a id="compilation" class="anchor" href="#compilation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilation</h2>
+
+<p>In order to compile:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ mkdir build <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">cd</span> build
+$ cmake ..
+$ make </pre></div>
+
+<p>Unitary test can be executed with:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ ctest</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Then, you can launch a demo:</p>
+
+<ul>
+<li>simple demo:</li>
+</ul>
+
+<div class="highlight highlight-source-shell"><pre>$ src/CHSplineDemo </pre></div>
+
+<ul>
+<li>or with parameters:</li>
+</ul>
+
+<div class="highlight highlight-source-shell"><pre>$ src/CHSplineDemo t0 t1 p0 p1 v0 v1 Np </pre></div>
+
+<p>Where:</p>
+
+<ul>
+<li>
+<strong>t0</strong> : Initial time</li>
+<li>
+<strong>t1</strong> : Final time</li>
+<li>
+<strong>p0</strong> : Initial position</li>
+<li>
+<strong>p1</strong> : Final position</li>
+<li>
+<strong>v0</strong> : Initial velocity</li>
+<li>
+<strong>v1</strong> : Final velocity</li>
+<li>
+<strong>Np</strong> : Number of point</li>
+</ul>
+
+<p>Like:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ src/CHSplineDemo 0.0 5.0 -1.0 5.0 -1.0 0.0 100 </pre></div>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/Galdeano" class="avatar"><img src="https://avatars1.githubusercontent.com/u/9252900?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/Galdeano">Galdeano</a> maintains <a href="https://github.com/Galdeano/CubicHermiteSpline">Cubichermitespline</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/Galdeano/CubicHermiteSpline/tarball/master" class="tar">tar</a><a href="https://github.com/Galdeano/CubicHermiteSpline/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>

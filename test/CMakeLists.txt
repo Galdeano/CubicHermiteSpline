@@ -18,4 +18,3 @@ target_link_libraries(test_CHSpline
 
 
 add_test(MyTest_CHSpline test_CHSpline)
-

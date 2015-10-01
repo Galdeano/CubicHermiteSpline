@@ -199,7 +199,7 @@ double Spline::evalSpline(double te) const
     return p_.back();
   }
 
-  //Find the right knot
+  // Find the right knot
   std::vector<double>::size_type noSpline = 0;
   for (std::vector<double>::size_type i = 0; i < t_.size(); ++i)
   {

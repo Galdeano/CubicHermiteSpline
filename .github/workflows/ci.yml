@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+    
+    - name: Set up compiler
+      run: |
+        if [ "${{ matrix.compiler }}" = "gcc" ]; then
+          echo "CC=gcc" >> $GITHUB_ENV
+          echo "CXX=g++" >> $GITHUB_ENV
+        else
+          echo "CC=clang" >> $GITHUB_ENV
+          echo "CXX=clang++" >> $GITHUB_ENV
+        fi
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y cmake libboost-test-dev
+
+    - name: Configure CMake
+      run: cmake -B build -S .
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Test
+      run: ctest --test-dir build --output-on-failure

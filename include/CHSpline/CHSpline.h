@@ -6,6 +6,13 @@
 
 namespace CHSpline
 {
+struct Knot
+{
+  double time;
+  double position;
+  double velocity;
+};
+
 class Spline
 {
  public:
@@ -90,7 +97,10 @@ class Spline
   }
 
  private:
+  void syncKnots();
+
   std::vector<double> t_, p_, v_;
+  std::vector<Knot> knots_;
 };
 } // namespace CHSpline
 

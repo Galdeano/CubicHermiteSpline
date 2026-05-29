@@ -271,7 +271,7 @@ double Spline::evalSpline(double te) const
                              [](double val, const Knot& knot) {
                                return val < knot.time;
                              });
-  std::size_t noSpline = std::distance(knots_.begin(), it) - 1;
+  std::size_t noSpline = static_cast<std::size_t>(std::distance(knots_.begin(), it) - 1);
 
   double tn = (te - knots_[noSpline].time) /
               (knots_[noSpline + 1].time - knots_[noSpline].time);  // normalized time

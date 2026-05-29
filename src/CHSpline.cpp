@@ -83,7 +83,7 @@ bool Spline::initSpline(std::vector<double> ti, std::vector<double> pi,
   // t is sorted
   for (std::vector<double>::size_type i = 1; i < ti.size(); i++)
   {
-    if ((ti[i] - ti[i - 1]) < 0)
+    if ((ti[i] - ti[i - 1]) <= 0)
     {
       std::cerr << "Spline initialisation: Error t vector is not sorted"
                 << std::endl;

@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_ShortVector)
   vi.push_back(v0);
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
 
-  ti.push_back(t0);
+  ti.push_back(t0 + 1.0);
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
   ti.pop_back();
 
@@ -190,13 +190,13 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_ShortVector)
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
   vi.pop_back();
 
-  ti.push_back(t0);
+  ti.push_back(t0 + 1.0);
   pi.push_back(p0);
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
   ti.pop_back();
   pi.pop_back();
 
-  ti.push_back(t0);
+  ti.push_back(t0 + 1.0);
   vi.push_back(v0);
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), false);
   ti.pop_back();
@@ -208,7 +208,7 @@ BOOST_AUTO_TEST_CASE(InitialiserVector_ShortVector)
   pi.pop_back();
   vi.pop_back();
 
-  ti.push_back(t0);
+  ti.push_back(t0 + 1.0);
   pi.push_back(p0);
   vi.push_back(v0);
   BOOST_CHECK_EQUAL(Sp.initSpline(ti, pi, vi), true);

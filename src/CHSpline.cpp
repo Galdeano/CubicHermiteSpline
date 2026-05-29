@@ -172,6 +172,57 @@ bool Spline::initDerivativeZero()
   return false;
 }
 
+bool Spline::initDerivativeMonotonicFritschCarlson()
+{
+  if (t_.size() <= 2)
+  {
+    return false;
+  }
+
+  // 1. Initialize velocities using Catmull-Rom as a starting point
+  initDerivativeCatmullRom();
+
+  std::size_t n = t_.size();
+  std::vector<double> d(n - 1); // secant slopes
+
+  // 2. Compute secant slopes
+  for (std::size_t i = 0; i < n - 1; ++i)
+  {
+    d[i] = (p_[i + 1] - p_[i]) / (t_[i + 1] - t_[i]);
+  }
+
+  // 3. Apply Fritsch-Carlson monotonicity filter
+  for (std::size_t i = 0; i < n - 1; ++i)
+  {
+    double secant = d[i];
+    if (std::abs(secant) < 1e-9) // flat segment
+    {
+      v_[i] = 0.0;
+      v_[i + 1] = 0.0;
+    }
+    else
+    {
+      // Enforce sign agreement
+      if (v_[i] * secant < 0) v_[i] = 0.0;
+      if (v_[i + 1] * secant < 0) v_[i + 1] = 0.0;
+
+      double alpha = v_[i] / secant;
+      double beta = v_[i + 1] / secant;
+      double sumSquare = alpha * alpha + beta * beta;
+
+      if (sumSquare > 9.0)
+      {
+        double tau = 3.0 / std::sqrt(sumSquare);
+        v_[i] = tau * alpha * secant;
+        v_[i + 1] = tau * beta * secant;
+      }
+    }
+  }
+
+  syncKnots();
+  return true;
+}
+
 bool Spline::initDerivatives(const std::vector<double>& vi)
 {
   if (vi.size() == t_.size())

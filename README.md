@@ -52,3 +52,32 @@ Like:
 $ src/CHSplineDemo 0.0 5.0 -1.0 5.0 -1.0 0.0 100 
 ```
 
+## Monotonicity Preservation (Fritsch-Carlson)
+
+By default, Cubic Hermite Splines can overshoot or oscillate when there are sharp steps in the input points. To prevent this, the library includes an implementation of the **Fritsch-Carlson algorithm** for monotonicity-preserving cubic interpolation.
+
+If the input knot points are monotonic, this algorithm adjusts the derivatives so that the interpolated spline is guaranteed to also remain strictly monotonic, completely avoiding overshoot or undershoot.
+
+### Usage
+
+This feature is fully backward-compatible and opt-in. You can activate it by invoking the `initDerivativeMonotonicFritschCarlson()` builder after initializing your spline coordinates:
+
+```cpp
+#include "CHSpline/CHSpline.h"
+
+// Define knot points (monotonic)
+std::vector<double> ti = {0.0, 1.0, 2.0, 3.0};
+std::vector<double> pi = {0.0, 1.0, 1.1, 2.1};
+std::vector<double> vi = {0.0, 0.0}; // boundary conditions
+
+CHSpline::Spline spline;
+spline.initSpline(ti, pi, vi);
+
+// Opt-in to monotonicity-preserving derivatives
+spline.initDerivativeMonotonicFritschCarlson();
+
+// The spline is now guaranteed not to overshoot [1.0, 1.1] on the second segment
+double val = spline.evalSpline(1.5); // returns a value strictly in [1.0, 1.1]
+```
+
+

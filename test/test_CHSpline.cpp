@@ -663,4 +663,40 @@ BOOST_AUTO_TEST_CASE(EvalVectorSplineReturn_Boundaries2)
   }
 }
 
+BOOST_AUTO_TEST_CASE(Derivative_MonotonicFritschCarlson)
+{
+  Spline Sp;
+
+  // Knot points that strictly increase, but with a sharp step in the middle
+  // ti: 0.0, 1.0, 2.0, 3.0
+  // pi: 0.0, 1.0, 1.1, 2.1  (sudden flat region between 1 and 2, which causes standard Hermite splines to overshoot)
+  std::vector<double> ti = {0.0, 1.0, 2.0, 3.0};
+  std::vector<double> pi = {0.0, 1.0, 1.1, 2.1};
+  std::vector<double> vi = {0.0, 0.0}; // boundaries
+
+  Sp.initSpline(ti, pi, vi);
+
+  // Initialize with Fritsch-Carlson
+  BOOST_CHECK_EQUAL(Sp.initDerivativeMonotonicFritschCarlson(), true);
+
+  // Evaluate the spline across the flat-ish segment [1.0, 2.0]
+  // In a standard Hermite spline, this segment would overshoot (go above 1.1 or below 1.0)
+  // With Fritsch-Carlson, it must remain strictly within [1.0, 1.1]
+  for (double t = 1.0; t <= 2.0; t += 0.1)
+  {
+    double val = Sp.evalSpline(t);
+    BOOST_CHECK(val >= 1.0);
+    BOOST_CHECK(val <= 1.1);
+  }
+
+  // Also verify that the overall spline is strictly monotone (never decreases)
+  double prev = Sp.evalSpline(0.0);
+  for (double t = 0.05; t <= 3.0; t += 0.05)
+  {
+    double current = Sp.evalSpline(t);
+    BOOST_CHECK(current >= prev);
+    prev = current;
+  }
+}
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -29,7 +29,7 @@ jobs:
         fi
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y cmake libboost-test-dev
+      run: sudo apt-get update && sudo apt-get install -y cmake libboost-test-dev libboost-system-dev libboost-filesystem-dev
 
     - name: Configure CMake
       run: cmake -B build -S .

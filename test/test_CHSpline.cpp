@@ -8,6 +8,8 @@
 #include <vector>
 #include "CHSpline/CHSpline.h"
 
+using CHSpline::Spline;
+
 BOOST_AUTO_TEST_SUITE(TestsCHSpline)
 
 class TestDerived : public Spline

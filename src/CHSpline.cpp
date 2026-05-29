@@ -57,8 +57,8 @@ bool Spline::initSpline(double ti0, double ti1, double pi0, double pi1,
   return true;
 }
 
-bool Spline::initSpline(std::vector<double> ti, std::vector<double> pi,
-                        std::vector<double> vi)
+bool Spline::initSpline(const std::vector<double>& ti, const std::vector<double>& pi,
+                        const std::vector<double>& vi)
 {
   // check vector sizes
   if ((ti.size() < 2) || (pi.size() < 2) || (vi.size() < 2))
@@ -159,7 +159,7 @@ bool Spline::initDerivativezero()
   return false;
 }
 
-bool Spline::initDerivatives(std::vector<double> vi)
+bool Spline::initDerivatives(const std::vector<double>& vi)
 {
   if (vi.size() == t_.size())
   {
@@ -214,7 +214,7 @@ double Spline::evalSpline(double te) const
          h4 * v_[noSpline + 1] * (t_[noSpline + 1] - t_[noSpline]);
 }
 
-bool Spline::evalVectorSpline(std::vector<double> t,
+bool Spline::evalVectorSpline(const std::vector<double>& t,
                               std::vector<double>& output) const
 {
   output.clear();
@@ -225,7 +225,7 @@ bool Spline::evalVectorSpline(std::vector<double> t,
   return true;
 }
 
-std::vector<double> Spline::evalVectorSpline(std::vector<double> t) const
+std::vector<double> Spline::evalVectorSpline(const std::vector<double>& t) const
 {
   std::vector<double> output;
   for (std::vector<double>::size_type i = 0; i < t.size(); i++)

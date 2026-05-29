@@ -12,6 +12,7 @@
 #include <vector>
 #include <cstdlib>
 #include <cstdio>
+#include <algorithm>
 #include "CHSpline/CHSpline.h"
 
 Spline::Spline()
@@ -195,15 +196,9 @@ double Spline::evalSpline(double te) const
     return p_.back();
   }
 
-  // Find the right knot
-  std::vector<double>::size_type noSpline = 0;
-  for (std::vector<double>::size_type i = 0; i < t_.size(); ++i)
-  {
-    if (!(te < t_[i]))
-    {
-      noSpline = i;
-    }
-  }
+  // Find the right knot using binary search (O(log n))
+  auto it = std::upper_bound(t_.begin(), t_.end(), te);
+  std::vector<double>::size_type noSpline = std::distance(t_.begin(), it) - 1;
 
   double tn = (te - t_[noSpline]) /
               (t_[noSpline + 1] - t_[noSpline]);  // normalized time

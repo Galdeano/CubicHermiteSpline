@@ -49,7 +49,7 @@ class Spline
      \note This method requires more than 2 knots (i.e., at least one intermediary
      node). It will return false and leave the state unchanged for 2-knot splines.
   */
-  bool initDerivativezero();
+  bool initDerivativeZero();
 
   /**
      \brief Derivatives set to vector values

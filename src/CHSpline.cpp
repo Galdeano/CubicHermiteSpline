@@ -14,6 +14,16 @@
 
 namespace CHSpline
 {
+void Spline::syncKnots()
+{
+  knots_.clear();
+  knots_.reserve(t_.size());
+  for (std::size_t i = 0; i < t_.size(); ++i)
+  {
+    knots_.push_back({t_[i], p_[i], v_[i]});
+  }
+}
+
 Spline::Spline()
 {
   t_.push_back(0.0);
@@ -22,6 +32,7 @@ Spline::Spline()
   p_.push_back(1.0);
   v_.push_back(0.0);
   v_.push_back(0.0);
+  syncKnots();
 }
 
 Spline::Spline(double ti0, double ti1, double pi0, double pi1, double vi0,
@@ -33,6 +44,7 @@ Spline::Spline(double ti0, double ti1, double pi0, double pi1, double vi0,
   p_.push_back(pi1);
   v_.push_back(vi0);
   v_.push_back(vi1);
+  syncKnots();
 }
 
 
@@ -50,6 +62,7 @@ bool Spline::initSpline(double ti0, double ti1, double pi0, double pi1,
   v_.push_back(vi0);
   v_.push_back(vi1);
 
+  syncKnots();
   return true;
 }
 
@@ -113,6 +126,7 @@ bool Spline::initSpline(const std::vector<double>& ti, const std::vector<double>
     v_ = vi;
   }
 
+  syncKnots();
   return true;
 }
 
@@ -132,6 +146,7 @@ bool Spline::initDerivativeCatmullRom()
                               ((t_[i + 1] - t_[i]) * (t_[i + 1] - t_[i - 1]))));
     }
     v_.push_back(vBack);
+    syncKnots();
     return true;
   }
   return false;
@@ -150,6 +165,7 @@ bool Spline::initDerivativeZero()
       v_.push_back(0.0);
     }
     v_.push_back(vBack);
+    syncKnots();
     return true;
   }
   return false;
@@ -160,6 +176,7 @@ bool Spline::initDerivatives(const std::vector<double>& vi)
   if (vi.size() == t_.size())
   {
     v_ = vi;
+    syncKnots();
     return true;
   }
   return false;
@@ -173,6 +190,7 @@ bool Spline::addNode(double ti, double pi, double vi)
     t_.push_back(ti);
     p_.push_back(pi);
     v_.push_back(vi);
+    syncKnots();
     return true;
   }
   else
@@ -183,31 +201,34 @@ bool Spline::addNode(double ti, double pi, double vi)
 
 double Spline::evalSpline(double te) const
 {
-  if (te <= t_.front())
+  if (te <= knots_.front().time)
   {
-    return p_.front();
+    return knots_.front().position;
   }
-  if (te >= t_.back())
+  if (te >= knots_.back().time)
   {
-    return p_.back();
+    return knots_.back().position;
   }
 
   // Find the right knot using binary search (O(log n))
-  auto it = std::upper_bound(t_.begin(), t_.end(), te);
-  std::vector<double>::size_type noSpline = std::distance(t_.begin(), it) - 1;
+  auto it = std::upper_bound(knots_.begin(), knots_.end(), te,
+                             [](double val, const Knot& knot) {
+                               return val < knot.time;
+                             });
+  std::vector<double>::size_type noSpline = std::distance(knots_.begin(), it) - 1;
 
-  double tn = (te - t_[noSpline]) /
-              (t_[noSpline + 1] - t_[noSpline]);  // normalized time
+  double tn = (te - knots_[noSpline].time) /
+              (knots_[noSpline + 1].time - knots_[noSpline].time);  // normalized time
 
   double h1 = 2 * tn * tn * tn - 3 * tn * tn + 1;  // calculate basis function 1
   double h2 = -2 * tn * tn * tn + 3 * tn * tn;     // calculate basis function 2
   double h3 = tn * tn * tn - 2 * tn * tn + tn;     // calculate basis function 3
   double h4 = tn * tn * tn - tn * tn;              // calculate basis function 4
-  return h1 * p_[noSpline] +      // multiply and sum all functions
-         h2 * p_[noSpline + 1] +  // together to build the interpolated
-         h3 * v_[noSpline] *
-             (t_[noSpline + 1] - t_[noSpline]) +  // point along the curve.
-         h4 * v_[noSpline + 1] * (t_[noSpline + 1] - t_[noSpline]);
+  return h1 * knots_[noSpline].position +      // multiply and sum all functions
+         h2 * knots_[noSpline + 1].position +  // together to build the interpolated
+         h3 * knots_[noSpline].velocity *
+             (knots_[noSpline + 1].time - knots_[noSpline].time) +  // point along the curve.
+         h4 * knots_[noSpline + 1].velocity * (knots_[noSpline + 1].time - knots_[noSpline].time);
 }
 
 bool Spline::evalVectorSpline(const std::vector<double>& t,

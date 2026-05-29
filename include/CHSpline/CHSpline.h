@@ -39,11 +39,15 @@ class Spline
   /**
      \brief Derivatives calculation using Catmull-Rom Spline construction for
      minimal accelerations
+     \note This method requires more than 2 knots (i.e., at least one intermediary
+     node). It will return false and leave the state unchanged for 2-knot splines.
   */
   bool initDerivativeCatmullRom();
 
   /**
      \brief Derivatives set to zero for avoiding overshot
+     \note This method requires more than 2 knots (i.e., at least one intermediary
+     node). It will return false and leave the state unchanged for 2-knot splines.
   */
   bool initDerivativezero();
 

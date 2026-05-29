@@ -59,6 +59,13 @@ class Spline
   bool initDerivativeZero();
 
   /**
+     \brief Monotonicity-preserving derivatives using Fritsch-Carlson algorithm
+     \note This method requires more than 2 knots. It will return false and
+     leave the state unchanged for 2-knot splines.
+  */
+  bool initDerivativeMonotonicFritschCarlson();
+
+  /**
      \brief Derivatives set to vector values
   */
   bool initDerivatives(const std::vector<double>& vi);

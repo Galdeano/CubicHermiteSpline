@@ -23,10 +23,7 @@ class Spline
   Spline(double ti0, double ti1, double pi0, double pi1, double vi0,
          double vi1);
 
-  /**
-     \brief Destructor
-  */
-  ~Spline();
+
 
   /**
      \brief Initalise spline coefficients for two knot

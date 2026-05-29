@@ -1,6 +1,6 @@
 
-# Requires at least CMake 2.8 to configure the package.
-cmake_minimum_required (VERSION 2.8) 
+# Requires at least CMake 3.5 to configure the package.
+cmake_minimum_required (VERSION 3.5) 
 
 include(cmake/base.cmake)
 include(cmake/boost.cmake)

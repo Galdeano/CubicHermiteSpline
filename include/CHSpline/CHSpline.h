@@ -2,7 +2,6 @@
 #define SPLINE_H
 
 #include <vector>
-#include <deque>
 #include <cmath>
 
 namespace CHSpline

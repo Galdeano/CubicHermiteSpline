@@ -15,6 +15,8 @@
 #include <algorithm>
 #include "CHSpline/CHSpline.h"
 
+namespace CHSpline
+{
 Spline::Spline()
 {
   t_.push_back(0.0);
@@ -234,3 +236,4 @@ std::vector<double> Spline::evalVectorSpline(const std::vector<double>& t) const
   }
   return output;
 }
+} // namespace CHSpline

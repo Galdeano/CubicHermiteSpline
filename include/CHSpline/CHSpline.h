@@ -5,6 +5,8 @@
 #include <deque>
 #include <cmath>
 
+namespace CHSpline
+{
 class Spline
 {
  public:
@@ -90,5 +92,6 @@ class Spline
  private:
   std::vector<double> t_, p_, v_;
 };
+} // namespace CHSpline
 
 #endif

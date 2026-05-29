@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
     printf("As :  %s 0.0 5.0 -1.0 5.0 -1.0 0.0 100 (as here)\n", argv[0]);
   }
 
-  Spline Splines;
+  CHSpline::Spline Splines;
   double t0 = 0.0, t1 = 5.0, p0 = -1.0, p1 = 5.0, v0 = -1.0, v1 = 0.0;
   int Np = 100;
 

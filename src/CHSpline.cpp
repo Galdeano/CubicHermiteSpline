@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <algorithm>
+#include <stdexcept>
 #include "CHSpline/CHSpline.h"
 
 namespace CHSpline
@@ -90,7 +91,7 @@ bool Spline::initSpline(const std::vector<double>& ti, const std::vector<double>
   }
 
   // t is sorted
-  for (std::vector<double>::size_type i = 1; i < ti.size(); i++)
+  for (std::size_t i = 1; i < ti.size(); i++)
   {
     if ((ti[i] - ti[i - 1]) <= 0)
     {
@@ -112,7 +113,7 @@ bool Spline::initSpline(const std::vector<double>& ti, const std::vector<double>
   if ((vi.size() == 2) && (t_.size() != 2))
   {
     v_.push_back(vi[0]);
-    for (std::vector<double>::size_type i = 1; i < (t_.size() - 1); i++)
+    for (std::size_t i = 1; i < (t_.size() - 1); i++)
     {
       v_.push_back(0.5 * (((p_[i] - p_[i - 1]) * (t_[i + 1] - t_[i])) /
                               ((t_[i] - t_[i - 1]) * (t_[i + 1] - t_[i - 1])) +
@@ -138,7 +139,7 @@ bool Spline::initDerivativeCatmullRom()
     double vBack = v_.back();
     v_.clear();
     v_.push_back(vFront);
-    for (std::vector<double>::size_type i = 1; i < (t_.size() - 1); i++)
+    for (std::size_t i = 1; i < (t_.size() - 1); i++)
     {
       v_.push_back(0.5 * (((p_[i] - p_[i - 1]) * (t_[i + 1] - t_[i])) /
                               ((t_[i] - t_[i - 1]) * (t_[i + 1] - t_[i - 1])) +
@@ -160,7 +161,7 @@ bool Spline::initDerivativeZero()
     double vBack = v_.back();
     v_.clear();
     v_.push_back(vFront);
-    for (std::vector<double>::size_type i = 1; i < (t_.size() - 1); i++)
+    for (std::size_t i = 1; i < (t_.size() - 1); i++)
     {
       v_.push_back(0.0);
     }
@@ -201,6 +202,10 @@ bool Spline::addNode(double ti, double pi, double vi)
 
 double Spline::evalSpline(double te) const
 {
+  if (knots_.empty())
+  {
+    throw std::runtime_error("Spline is not initialized");
+  }
   if (te <= knots_.front().time)
   {
     return knots_.front().position;
@@ -215,7 +220,7 @@ double Spline::evalSpline(double te) const
                              [](double val, const Knot& knot) {
                                return val < knot.time;
                              });
-  std::vector<double>::size_type noSpline = std::distance(knots_.begin(), it) - 1;
+  std::size_t noSpline = std::distance(knots_.begin(), it) - 1;
 
   double tn = (te - knots_[noSpline].time) /
               (knots_[noSpline + 1].time - knots_[noSpline].time);  // normalized time
@@ -235,7 +240,7 @@ bool Spline::evalVectorSpline(const std::vector<double>& t,
                               std::vector<double>& output) const
 {
   output.clear();
-  for (std::vector<double>::size_type i = 0; i < t.size(); i++)
+  for (std::size_t i = 0; i < t.size(); i++)
   {
     output.push_back(evalSpline(t[i]));
   }
@@ -245,7 +250,7 @@ bool Spline::evalVectorSpline(const std::vector<double>& t,
 std::vector<double> Spline::evalVectorSpline(const std::vector<double>& t) const
 {
   std::vector<double> output;
-  for (std::vector<double>::size_type i = 0; i < t.size(); i++)
+  for (std::size_t i = 0; i < t.size(); i++)
   {
     output.push_back(evalSpline(t[i]));
   }

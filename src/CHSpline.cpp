@@ -3,9 +3,6 @@
  * @file  Spline.cpp
  * @brief Cubic Hermite splines implementation with first derivative end
  *conditions
- * $Date$
- *
- * $Id$
  */
 
 #include <iostream>
@@ -140,7 +137,7 @@ bool Spline::initDerivativeCatmullRom()
   return false;
 }
 
-bool Spline::initDerivativezero()
+bool Spline::initDerivativeZero()
 {
   if (t_.size() > 2)
   {

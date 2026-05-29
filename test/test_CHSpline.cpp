@@ -439,7 +439,7 @@ BOOST_AUTO_TEST_CASE(Derivative_Manipulation)
   BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
   BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v3);
 
-  BOOST_CHECK_EQUAL(Sp.initDerivativezero(), true);
+  BOOST_CHECK_EQUAL(Sp.initDerivativeZero(), true);
   BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
   BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
   BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v3);
@@ -482,7 +482,7 @@ BOOST_AUTO_TEST_CASE(Derivative_InefectiveIfNoIntermediaryNode)
   BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
   BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v1);
 
-  Sp.initDerivativezero();
+  Sp.initDerivativeZero();
   BOOST_CHECK_EQUAL(Sp.getVelocity().size(), vi.size());
   BOOST_CHECK_EQUAL(Sp.getVelocity().front(), v0);
   BOOST_CHECK_EQUAL(Sp.getVelocity().back(), v1);

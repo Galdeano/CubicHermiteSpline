@@ -35,8 +35,8 @@ class Spline
   /**
      \brief Initalise spline coefficients
   */
-  bool initSpline(std::vector<double> ti, std::vector<double> pi,
-                  std::vector<double> vi);
+  bool initSpline(const std::vector<double>& ti, const std::vector<double>& pi,
+                  const std::vector<double>& vi);
 
   /**
      \brief Derivatives calculation using Catmull-Rom Spline construction for
@@ -52,7 +52,7 @@ class Spline
   /**
      \brief Derivatives set to vector values
   */
-  bool initDerivatives(std::vector<double> vi);
+  bool initDerivatives(const std::vector<double>& vi);
 
   /**
      \brief Add a node
@@ -67,9 +67,9 @@ class Spline
   /**
      \brief Evaluate spline for a vector of values
   */
-  bool evalVectorSpline(std::vector<double> t,
+  bool evalVectorSpline(const std::vector<double>& t,
                         std::vector<double>& output) const;
-  std::vector<double> evalVectorSpline(std::vector<double> t) const;
+  std::vector<double> evalVectorSpline(const std::vector<double>& t) const;
 
   /**
      \brief Accessors
